@@ -1,0 +1,22 @@
+# OS X system files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# OS X Thumbnails
+._*
+
+# OS X Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Windows Folder config file
+Desktop.ini
+
+# Windows Recycle Bin used on file shares
+$RECYCLE.BIN/

@@ -961,7 +961,11 @@ var UpdaterModel = function() {
 			if (!r)
 				return;
 			
-			self.downloadUrl(remoteRepository + r.latestFileName);
+			if (r.latestFileName.match(/^https?:/g))
+			  self.downloadUrl(r.latestFileName);
+			else
+			  self.downloadUrl(remoteRepository + r.latestFileName);
+			  
 			self.latestVersion(r.latestVersion);
 			self.versionHistory(r.versions);
 			self.versionCheckDate(new XDate());

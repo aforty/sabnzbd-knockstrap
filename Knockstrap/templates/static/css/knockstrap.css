@@ -62,6 +62,8 @@ select { height: 26px; font-size: 12px; width: auto; margin-bottom: 0; }
 
 /* Queue */
 .queue .wrapper .item { min-height: 80px; }
+.queue .wrapper .item .header .title h3 { cursor: pointer; }
+.queue .wrapper .item .header .title input { font-size: 18px; line-height: 22px; font-weight: bold; font-family: inherit; color: inherit; text-rendering: optimizelegibility; margin: 0 0 10px 0; border: 0; padding: 0; width: 100%; }
 .queue .wrapper .item .progress-container { margin-bottom: 5px; height: 22px; vertical-align: bottom; }
 .queue .wrapper .item .progress-container .progress { width: 100%; display: inline-block; height: 21px; margin-bottom: 0; }
 .queue .wrapper .item .progress-container .progress .bar .indicator { line-height: 22px; font-size: 12px; margin-right: 10px; font-weight: 800; }
@@ -93,14 +95,32 @@ select { height: 26px; font-size: 12px; width: auto; margin-bottom: 0; }
 .updater .alert ul li { line-height: 14px; font-size: 12px; }
 
 /* Large desktop */
-@media (min-width: 1200px) { }
+@media (min-width: 1200px) { 
+	.wrapper .item .header .title { width: 92%; }
+	
+  .queue .wrapper .item .header .title input { height: 22px; padding-top: 3px; }
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 980px) and (max-width: 1199px) {
+	body { padding-top: 0; }
+	
+	.wrapper .item .header .title { width: 90%; }
+	.wrapper .item .header .title h3 { width: 100%; display: block; }
+	.wrapper .item .header .title h4 { width: 100%; }
+	
+  .queue .wrapper .item .header .title input { height: 22px; }
+}
  
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px) {
 	body { padding-top: 0; }
 	
+	.wrapper .item .header .title { width: 89%; }
 	.wrapper .item .header .title h3 { width: 100%; display: block; }
 	.wrapper .item .header .title h4 { width: 100%; }
+	
+  .queue .wrapper .item .header .title input { height: 22px; }
 }
  
 /* Landscape phone to portrait tablet */
@@ -113,10 +133,12 @@ select { height: 26px; font-size: 12px; width: auto; margin-bottom: 0; }
 	.page-header h2 { font-size: 24px; line-height: 28px; }
 	.page-header h4 { font-size: 16px; line-height: 24px; }
 	
-	.wrapper .item .header .title { width: 90%; }
+	.wrapper .item .header .title { width: 85%; }
 	.wrapper .item .header .title h3 { font-size: 14px; line-height: 20px; width: 100%; display: block; }
 	.wrapper .item .header .title h4 { width: 100%; }
 	.wrapper .item .info { font-size: 14px; line-height: 18px; margin-bottom: 5px; }
+	
+  .queue .wrapper .item .header .title input { font-size: 14px; line-height: 20px; margin-top: -2px; }
 	
 	.history .wrapper .row { font-size: 12px; line-height: 14px; }
 	.history .wrapper .row .title { text-align: left; }
@@ -135,7 +157,7 @@ select { height: 26px; font-size: 12px; width: auto; margin-bottom: 0; }
 	.page-header h4 { font-size: 14px; line-height: 18px; }
 	
 	/* .wrapper .item { min-height: 100px; } */
-	.wrapper .item .header .title { width: 84%; }
+	.wrapper .item .header .title { width: 80%; }
 	.wrapper .item .header .title h3 { font-size: 14px; line-height: 20px; width: 100%; display: block; }
 	.wrapper .item .header .title h4 { width: 100%; line-height: 18px; }
 	.wrapper .item .info { font-size: 14px; line-height: 18px; margin-bottom: 5px; }

@@ -205,7 +205,10 @@
 			<div class="wrapper">
 				<div class="item hero-unit">
 					<div class="header">
-						<div class="title"><h3 data-bind="text: name"></h3></div>
+						<div class="title">
+						  <h3 data-bind="text: name, click: editName, visible: !editingName()"></h3>
+						  <input data-bind="value: editedName, visible: editingName, hasfocus: editingName" />
+						</div>
 						<div class="tools">
 							<a class="btn btn-mini btn-tiny" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="icon-trash"></i></a>
 							<a class="btn btn-mini btn-tiny btn-move" href="#" alt="Move"><i class="icon-move"></i></a>
@@ -263,10 +266,11 @@
 								<span data-bind="text: name"></span>
 							</h3>
 							<h4>
-								<span class="visible-desktop">&#8212;&nbsp;</span><span data-bind="text: status"></span>&nbsp;<span data-bind="text: completedOn"></span>
+								<span class="visible-desktop">&#8212;&nbsp;</span><span data-bind="text: status"></span>&nbsp;<span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
 						</h4>
 						</div>
 						<div class="tools">
+						  <a class="btn btn-mini btn-tiny" href="#" alt="Retry" data-bind="click: \$parent.retryItem, visible: state('failed')"><i class="icon-retweet"></i></a>
 							<a class="btn btn-mini btn-tiny" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="icon-trash"></i></a>
 							<a class="btn btn-mini btn-tiny" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'icon-chevron-up' : 'icon-chevron-down' }"></i></a>
 						</div>

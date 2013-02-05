@@ -101,13 +101,9 @@ select { height: 26px; font-size: 12px; width: auto; margin-bottom: 0; }
   .queue .wrapper .item .header .title input { height: 22px; padding-top: 3px; }
 }
  
-/* Portrait tablet to landscape and desktop */
+/* Small desktop */
 @media (min-width: 980px) and (max-width: 1199px) {
-	body { padding-top: 0; }
-	
 	.wrapper .item .header .title { width: 90%; }
-	.wrapper .item .header .title h3 { width: 100%; display: block; }
-	.wrapper .item .header .title h4 { width: 100%; }
 	
   .queue .wrapper .item .header .title input { height: 22px; }
 }

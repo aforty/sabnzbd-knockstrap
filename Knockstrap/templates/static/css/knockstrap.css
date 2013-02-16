@@ -9,6 +9,7 @@ select { height: 26px; font-size: 12px; width: auto; margin-bottom: 0; }
 .page-header h4 { display: inline-block; vertical-align: bottom; padding-left: 10px; line-height: 30px; }
 
 .navbar { -webkit-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.9); box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.9); }
+.navbar .nav { margin: 0 5px 0 0; }
 .navbar .brand { padding: 10px 20px 5px; }
 .navbar .brand img { height: 25px; }
 .navbar.navbar-inverse .nav > li > a { font-weight: 500; color: white; }
@@ -66,7 +67,7 @@ select { height: 26px; font-size: 12px; width: auto; margin-bottom: 0; }
 .queue .wrapper .item .header .title input { font-size: 18px; line-height: 22px; font-weight: bold; font-family: inherit; color: inherit; text-rendering: optimizelegibility; margin: 0 0 10px 0; border: 0; padding: 0; width: 100%; }
 .queue .wrapper .item .progress-container { margin-bottom: 5px; height: 22px; vertical-align: bottom; }
 .queue .wrapper .item .progress-container .progress { width: 100%; display: inline-block; height: 21px; margin-bottom: 0; }
-.queue .wrapper .item .progress-container .progress .bar .indicator { line-height: 22px; font-size: 12px; margin-right: 10px; font-weight: 800; }
+.queue .wrapper .item .progress-container .progress .bar .indicator { line-height: 22px; font-size: 12px; margin-top: -1px; margin-right: 5px; font-weight: 800; }
 
 /* History */
 .history .wrapper .hero-unit.success { background-color: #DFF0D8; }

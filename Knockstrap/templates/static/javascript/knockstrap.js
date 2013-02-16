@@ -719,6 +719,7 @@ var HistoryModel = function(data) {
 	var time = ko.observable();
 	var url = ko.observable();
 	var infoUrl = ko.observable();
+	var actionLine = ko.observable();
 	var showMore = ko.observable(false);
 	var completed = ko.observable();
 	
@@ -766,14 +767,12 @@ var HistoryModel = function(data) {
 	};
 	
 	var state = function(v) {
-		v = v.toLowerCase();
 		var currentStatus = status().toLowerCase();
 		
-		if (currentStatus != "completed" && currentStatus != "failed")
+		if (currentStatus != "completed" && currentStatus != "failed" && currentStatus != "queued")
 		  currentStatus = "processing";
 		
-		return v == currentStatus;
-
+		return v.toLowerCase() === currentStatus;
 	};
 	
 	var updateFromData = function(data) {
@@ -790,6 +789,7 @@ var HistoryModel = function(data) {
 		time(data.download_time);
 		url(data.url);
 		infoUrl(data.url_info);
+		actionLine(data.action_line);
 		
 		var date = new Date(0);
 		date.setUTCSeconds(data.completed);
@@ -820,6 +820,7 @@ var HistoryModel = function(data) {
 	self.time = time;
 	self.url = url;
 	self.infoUrl = infoUrl;
+	self.actionLine = actionLine;
 	self.completed = completed;
 	self.completedOn = completedOn;
 	self.showMore = showMore;

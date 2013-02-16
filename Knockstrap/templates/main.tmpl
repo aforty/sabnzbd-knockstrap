@@ -262,11 +262,14 @@
 					<div class="header">
 						<div class="title">
 							<h3>
-								<i data-bind="css: { 'icon-refresh icon-spin': state('processing'), 'icon-warning-sign': state('failed'), 'icon-ok': state('completed') }"></i>
+								<i class="icon-circle-blank" data-bind="visible: state('queued')"></i>
+								<i class="icon-refresh icon-spin" data-bind="visible: state('processing')"></i>
+								<i class="icon-warning-sign" data-bind="visible: state('failed')"></i>
+								<i class="icon-ok" data-bind="visible: state('completed')"></i>
 								<span data-bind="text: name"></span>
 							</h3>
 							<h4>
-								<span class="visible-desktop">&#8212;&nbsp;</span><span data-bind="text: status"></span>&nbsp;<span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
+								<span class="visible-desktop">&#8212;&nbsp;</span><span data-bind="text: status, visible: actionLine() == '' && !state('processing')"></span>&nbsp;<span data-bind="text: '- ' + actionLine(), visible: actionLine() != '' && state('processing')"></span><span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
 						</h4>
 						</div>
 						<div class="tools">

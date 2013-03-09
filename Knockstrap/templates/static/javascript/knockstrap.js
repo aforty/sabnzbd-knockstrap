@@ -1121,6 +1121,7 @@ var UpdaterModel = function() {
 	
 	// public properties
 	self.downloadUrl = downloadUrl;
+	self.showUpdateBanner = showUpdateBanner;
 	
 	// public methods
 	self.remindMeLater = remindMeLater;

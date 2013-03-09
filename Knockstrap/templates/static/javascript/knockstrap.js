@@ -1045,7 +1045,7 @@ var UpdaterModel = function() {
 	var self = this;
 	
 	// constants
-	var currentVersion = 0.3;
+	var currentVersion = 0.4;
 	var remoteRepository = "http://aforty.myftp.org/sabnzbd-knockstrap/";
 	var checkIntervalMilliseconds = 86400000; // 1 day
 	

@@ -19,7 +19,7 @@
 
         <header>
           <h1>Knockstrap</h1>
-          <h2>A modern interface for SABnzbd</h2>
+          <h2>A modern theme for SABnzbd</h2>
         </header>
 
         <section id="downloads" class="clearfix">
@@ -31,32 +31,45 @@
         <hr>
 
         <section id="main_content">
-          <h3>Welcome to GitHub Pages.</h3>
+          <h3>What is this?</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>Knockstrap is a theme for <a href="http://sabnzbd.org/">SABnzbd</a>, the popular automated Usenet download tool. It brings a larger, modern, lighter and cleaner look to one of your favorite tools.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<h3>Features</h3>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<ul>
+<li>Clean interface: Large fonts, clean layout, easy to navigate</li>
+<li>Responsive design: looks great on your iPhone/Android/iPad, as well as your desktop</li>
+<li>Rewritten: Completely rewritten from scratch, not based on Plush</li>
+<li>Update system: it will inform you when a new version of Knockstrap is available</li>
+<li>Uses KnockoutJS and Bootstrap</li>
+</ul><h3>How to I install it?</h3>
 
-<h3>Designer Templates</h3>
+<p>Just download, extract and move the containing <code>Knockstrap</code> directory into the interfaces directory in your SABnzbd installation.</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>Alternatively, you can clone directly from GitHub and I trust you to know how to do that. </p>
 
-<h3>Rather Drive Stick?</h3>
+<h3>It's missing something!</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>Yes I'm aware that despite my best efforts this still lacks in a few aspects behind the built-in Plush theme. Good news though, this is GitHub! So, fork the project, grab your favorite text editor, make the changes you need and send me a pull request. </p>
 
-<h3>Authors and Contributors</h3>
+<h3>Code? I only want to change the look...</h3>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>So you know CSS? Right on, I made it so that you can easily change the look and feel while keeping the code base. Fork the project, add a new CSS file as <code>Knockstrap/templates/static/stylesheets/colorschemes/yourname.css</code>. Next time you relaunch SABnzbd you will see your color scheme in the themes drop down as 'Knockstrap - yourname'. Cool huh?</p>
 
-<h3>Support or Contact</h3>
+<p>Is it good enough to share with everyone else? I'd love to include it, send a pull request so that you can get proper credit. </p>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<h3>Why did you do this?</h3>
+
+<p>Why does anyone do anything? I got bored. Well, I also wanted a theme that would play well on both mobile and desktop, since mobile and tablet are quickly becoming my #1 way of using this tool. SABnzbd offers a secondary mobile skin, but separate sites for desktop and mobile? How 2005. I needed a responsive design. I found that there were some core layout problems and oddities that stopped me from giving this kind of responsive makeover to Plush. So I needed to redo this from scratch and the fastest way I knew how was Twitter's <a href="http://twitter.github.io/bootstrap/">Bootstrap</a>. So out of the box Knockstrap is responsive and looks great at any screen size. </p>
+
+<p>While I was at it, I wasn't going to use Cheetah's somewhat arcane markup language either. Template files with special markup that get parsed on the server on every request? No thanks. So I was going to rebuild this as a client side javascript app, pulling info as needed from the available json api. Client side MVVM anyone? Enter <a href="http://knockoutjs.com/">Knockout</a>. </p>
+
+<p>Combine these two and you have the magic sauce for a beautiful and responsive client side application worthy of SABnzbd. Hope you enjoy!</p>
+
+<h3>I need to contact you!</h3>
+
+<p>Ok, follow me on Twitter <a href="http://twitter.com/aforty">@aforty</a>, or head over to the <a href="http://forums.sabnzbd.org/viewtopic.php?t=12626">original forum thread</a> and post your thoughts or questions. </p>
         </section>
 
         <footer>

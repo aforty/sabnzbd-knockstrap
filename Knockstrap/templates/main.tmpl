@@ -27,6 +27,7 @@
 	<script type="text/javascript" src="./static/javascript/jquery-ui-1.9.2.custom.min.js"></script>
 	<script type="text/javascript" src="./static/javascript/knockout-2.2.0.min.js"></script>
 	<script type="text/javascript" src="./static/javascript/knockout-sortable-0.7.min.js"></script>
+	<script type="text/javascript" src="./static/javascript/knockout-filedrop.js"></script>
 	<script type="text/javascript" src="./static/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./static/javascript/xdate.min.js"></script>
 	<script type="text/javascript" src="./static/javascript/knockstrap.js"></script>
@@ -39,7 +40,7 @@
 		});
 	</script>
 </head>
-<body>
+<body data-bind="filedrop: { overlaySelector: '.fileDropOverlay', onFileDrop: addFile }">
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -104,7 +105,7 @@
 						</form>
 					</div>
 					<div class="span6">
-						<form data-bind="submit: addFile">
+						<form data-bind="submit: addFileFromForm">
 							<fieldset>
 								<legend>$T('addFile')</legend>
 								<label>File</label>
@@ -332,4 +333,7 @@
 			<p data-bind="visible: !isFirstLoad()">You have no warnings or errors.</p>
 		</div>
 	</div>
+	
+	<!-- File Drop Zone -->
+  <div class="fileDropOverlay modal-backdrop fade in"><i class="icon icon-plus-sign-alt"></i></div>
 </body>

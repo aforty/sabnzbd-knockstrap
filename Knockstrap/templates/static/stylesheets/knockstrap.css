@@ -1,5 +1,6 @@
 body { position: relative; padding-top: 40px; }
 
+.modal-backdrop { background-color: #fff; }
 .table { font-size: 10px; }
 .modal .modal-body .container { width: 100%; }
 select { height: 26px; font-size: 12px; width: auto; margin-bottom: 0; }
@@ -94,6 +95,10 @@ select { height: 26px; font-size: 12px; width: auto; margin-bottom: 0; }
 .updater .alert h5 { margin: 5px 0 0 0; font-size: 12px; font-weight: bold; }
 .updater .alert ul { margin-bottom: 0; }
 .updater .alert ul li { line-height: 14px; font-size: 12px; }
+
+/* File Drop Overlay */
+.fileDropOverlay { display: none; text-align: center; font-size: 30em; padding-top: 15%; }
+
 
 /* Large desktop */
 @media (min-width: 1200px) { 

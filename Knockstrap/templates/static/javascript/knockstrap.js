@@ -1263,7 +1263,7 @@ var MainModel = function() {
 	};
     
 	var addUrl = function(form) {
-		$.when($.ajax({ url: "tapi", type: "POST", cache: false, data: { mode: "addid", name: $(form.url).val(), apikey: apiKey } }))
+		$.when($.ajax({ url: "tapi", type: "POST", cache: false, data: { mode: "addid", name: $(form.url).val(), cat: "Default", script: "Default", priority: -100, pp: -1, apikey: apiKey } }))
 		.then(function(r){
 			$("#addNZB").modal("hide");
 		})
@@ -1272,10 +1272,18 @@ var MainModel = function() {
 		});
 	};
 	
-	var addFile = function(form) {
+	var addFileFromForm = function(form){
+	  return addFile($(form.file)[0].files[0]);
+	};
+	
+	var addFile = function(file) {
 		var data = new FormData();
-		data.append("name", $(form.file)[0].files[0]);
+		data.append("name", file);
 		data.append("mode", "addfile");
+		data.append("cat", "Default");    // Default category
+		data.append("script", "Default"); // Default script
+		data.append("priority", "-100");  // Default priority
+		data.append("pp", "-1");          // Default post-processing options
 		data.append("apikey", apiKey);
 		
 		$.when($.ajax({ url: "tapi", type: "POST", cache: false, processData: false, contentType: false, data: data }))
@@ -1301,6 +1309,7 @@ var MainModel = function() {
 	self.shutdown = shutdown;
 	self.addUrl = addUrl;
 	self.addFile = addFile;
+	self.addFileFromForm = addFileFromForm;
 	
 	// initialize
 	refresh({ force: true });

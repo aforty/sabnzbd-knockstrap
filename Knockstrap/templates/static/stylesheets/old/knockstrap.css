@@ -1,0 +1,168 @@
+body { position: relative; padding-top: 40px; }
+
+.modal-backdrop { background-color: #fff; }
+.table { font-size: 10px; }
+.modal .modal-body .container { width: 100%; }
+select { height: 26px; font-size: 12px; width: auto; margin-bottom: 0; }
+
+.page-header { margin-bottom: 10px; }
+.page-header h2 { display: inline-block; vertical-align: middle; }
+.page-header h4 { display: inline-block; vertical-align: bottom; padding-left: 10px; line-height: 30px; }
+
+.navbar { -webkit-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.9); box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.9); }
+.navbar .nav { margin: 0 5px 0 0; }
+.navbar .brand { padding: 10px 20px 5px; }
+.navbar .brand img { height: 25px; }
+.navbar.navbar-inverse .nav > li > a { font-weight: 500; color: white; }
+.navbar.navbar-inverse .nav > li > a:hover { color: #eee; }
+
+.container .info { font-size: 16px; }
+
+.wrapper { display: inline-block; width: 100%; vertical-align: top; }
+.wrapper .item { 
+	background-color: #FCFCFC;
+	border: solid 1px rgba(206, 206, 206, 0.31);
+	padding: 5px;
+	margin-bottom: 10px;
+	width: 100%;
+	text-align: left; 
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box; 
+	-ms-box-sizing: border-box; 
+	-o-box-sizing: border-box; 
+	box-sizing: border-box; 
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+.wrapper .item > div { clear: left; }
+.wrapper .item .header { position: relative; }
+.wrapper .item .header .title { text-align: left; width: 95%; }
+.wrapper .item .header .title h3 { 
+	display: inline-block;
+	word-wrap: break-word; 
+	overflow-wrap: break-word; 
+	margin-top: 0;
+	font-size: 18px;
+	line-height: 22px;
+}
+.wrapper .item .header .title h4 { 
+	display: inline-block;
+	word-wrap: break-word; 
+	overflow-wrap: break-word; 
+	margin-top: 0;
+	font-size: 14px;
+	line-height: 22px;
+}
+.wrapper .item .header .tools { position: absolute; right: 0; top: 0; text-align: right; font-size: 12px; line-height: 14px; }
+.wrapper .item .header .tools i { font-size: 12px; }
+.wrapper .item .header .tools .btn-tiny { height: 18px; padding: 0 2px; width: 16px; }
+.wrapper .item .header .tools .btn-move { cursor: move; }
+.wrapper .item .info { font-size: 16px; line-height: 18px; margin-bottom: 10px; }
+
+
+/* Queue */
+.queue .wrapper .item { min-height: 80px; }
+.queue .wrapper .item .header .title h3 { cursor: pointer; }
+.queue .wrapper .item .header .title input { font-size: 18px; line-height: 22px; font-weight: bold; font-family: inherit; color: inherit; text-rendering: optimizelegibility; margin: 0 0 10px 0; border: 0; padding: 0; width: 100%; }
+.queue .wrapper .item .progress-container { margin-bottom: 5px; height: 22px; vertical-align: bottom; }
+.queue .wrapper .item .progress-container .progress { width: 100%; display: inline-block; height: 21px; margin-bottom: 0; }
+.queue .wrapper .item .progress-container .progress .bar .indicator { line-height: 22px; font-size: 12px; margin-top: -1px; margin-right: 5px; font-weight: 800; }
+
+/* History */
+.history .wrapper .hero-unit.success { background-color: #DFF0D8; }
+.history .wrapper .hero-unit.error { color: #B94A48; }
+.history .wrapper .item { }
+.history .wrapper .item .header .title { line-height: normal; }
+.history .wrapper .item .header .title h3 { margin: 0; font-size: 16px; line-height: 18px; }
+.history .wrapper .item .header .title h4 { margin: 0; font-size: 14px; line-height: 18px; font-weight: normal; }
+.history .wrapper .details { margin-top: 10px; }
+.history .wrapper .row { font-size: 14px; line-height: 16px; }
+.history .wrapper .row .title { text-align: right; }
+.history .wrapper .row .value { font-weight: bold; word-wrap: break-word; overflow-wrap: break-word; }
+
+/* Status */
+.status { margin-bottom: 20px; }
+.status .warnings { }
+.status .warnings .alert { padding: 3px 14px; margin-bottom: 5px; font-size: 11px; }
+.status .warnings .alert .row .timestamp { text-align: right; }
+
+/* Updater */
+.updater { margin-top: 20px; }
+.updater .alert { padding: 3px 35px 3px 8px; margin-bottom: 0; }
+.updater .alert h4 { margin: 0; font-size: 14px; }
+.updater .alert h5 { margin: 5px 0 0 0; font-size: 12px; font-weight: bold; }
+.updater .alert ul { margin-bottom: 0; }
+.updater .alert ul li { line-height: 14px; font-size: 12px; }
+
+/* File Drop Overlay */
+.fileDropOverlay { display: none; text-align: center; font-size: 30em; padding-top: 15%; }
+
+
+/* Large desktop */
+@media (min-width: 1200px) { 
+	.wrapper .item .header .title { width: 92%; }
+	
+  .queue .wrapper .item .header .title input { height: 22px; padding-top: 3px; }
+}
+ 
+/* Small desktop */
+@media (min-width: 980px) and (max-width: 1199px) {
+	.wrapper .item .header .title { width: 90%; }
+	
+  .queue .wrapper .item .header .title input { height: 22px; }
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+	body { padding-top: 0; }
+	
+	.wrapper .item .header .title { width: 89%; }
+	.wrapper .item .header .title h3 { width: 100%; display: block; }
+	.wrapper .item .header .title h4 { width: 100%; }
+	
+  .queue .wrapper .item .header .title input { height: 22px; }
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+	body { padding: 0 5px; }
+	
+	.navbar { margin-left: -5px; margin-right: -5px; }
+	
+	.page-header { margin-top: 0; padding-bottom: 3px; }
+	.page-header h2 { font-size: 24px; line-height: 28px; }
+	.page-header h4 { font-size: 16px; line-height: 24px; }
+	
+	.wrapper .item .header .title { width: 85%; }
+	.wrapper .item .header .title h3 { font-size: 14px; line-height: 20px; width: 100%; display: block; }
+	.wrapper .item .header .title h4 { width: 100%; }
+	.wrapper .item .info { font-size: 14px; line-height: 18px; margin-bottom: 5px; }
+	
+  .queue .wrapper .item .header .title input { font-size: 14px; line-height: 20px; margin-top: -2px; }
+	
+	.history .wrapper .row { font-size: 12px; line-height: 14px; }
+	.history .wrapper .row .title { text-align: left; }
+	
+	.navbar-fixed-top { margin-left: -5px; margin-right: -5px; }
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {
+	body { padding: 0 5px; }
+	
+	.navbar { margin-left: -5px; margin-right: -5px; }
+	
+	.page-header { margin-top: 0; padding-bottom: 3px; }
+	.page-header h2 { font-size: 20px; line-height: 24px; }
+	.page-header h4 { font-size: 14px; line-height: 18px; }
+	
+	/* .wrapper .item { min-height: 100px; } */
+	.wrapper .item .header .title { width: 80%; }
+	.wrapper .item .header .title h3 { font-size: 14px; line-height: 20px; width: 100%; display: block; }
+	.wrapper .item .header .title h4 { width: 100%; line-height: 18px; }
+	.wrapper .item .info { font-size: 14px; line-height: 18px; margin-bottom: 5px; }
+	
+	.history .wrapper .row { font-size: 12px; line-height: 14px; }
+	.history .wrapper .row .title { text-align: left; }
+}

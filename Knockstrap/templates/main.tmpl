@@ -13,24 +13,24 @@
 	<link rel="shortcut icon" href="static/images/favicon.ico" />
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="rss?mode=history&apikey=$session" />
 	
-	<link rel="apple-touch-icon" sizes="57x57" href="https://dl.dropbox.com/u/2178680/sabnzbd-knockstrap/apple-touch-icon-57x57.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="https://dl.dropbox.com/u/2178680/sabnzbd-knockstrap/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="https://dl.dropbox.com/u/2178680/sabnzbd-knockstrap/apple-touch-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="https://dl.dropbox.com/u/2178680/sabnzbd-knockstrap/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="57x57" href="static/bootstrap/ico/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="static/bootstrap/ico/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="static/bootstrap/ico/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="static/bootstrap/ico/apple-touch-icon-144x144.png">
 	
 	<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="static/stylesheets/font-awesome.min.css" />
 	<link rel="stylesheet" type="text/css" href="static/stylesheets/knockstrap.css"/>
 	<link rel="stylesheet" type="text/css" href="static/stylesheets/colorschemes/${color_scheme}.css"/>
 	
-	<script type="text/javascript" src="./static/javascript/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript" src="./static/javascript/jquery-ui-1.9.2.custom.min.js"></script>
-	<script type="text/javascript" src="./static/javascript/knockout-2.2.0.min.js"></script>
-	<script type="text/javascript" src="./static/javascript/knockout-sortable-0.7.min.js"></script>
-	<script type="text/javascript" src="./static/javascript/knockout-filedrop.js"></script>
-	<script type="text/javascript" src="./static/bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="./static/javascript/xdate.min.js"></script>
-	<script type="text/javascript" src="./static/javascript/knockstrap.js"></script>
+	<script type="text/javascript" src="static/javascript/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="static/javascript/jquery-ui-1.10.3.custom.min.js"></script>
+	<script type="text/javascript" src="static/javascript/knockout-2.3.0.js"></script>
+	<script type="text/javascript" src="static/javascript/knockout-sortable-0.8.2.min.js"></script>
+	<script type="text/javascript" src="static/javascript/knockout-filedrop.js"></script>
+	<script type="text/javascript" src="static/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="static/javascript/xdate.min.js"></script>
+	<script type="text/javascript" src="static/javascript/knockstrap.js"></script>
 
 	<script type="text/javascript">
 		apiKey = "$session";
@@ -42,48 +42,46 @@
 </head>
 <body data-bind="filedrop: { overlaySelector: '.fileDropOverlay', onFileDrop: addFile }">
 	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-				</button>
-				<a class="brand callout" href="."><img src="./static/images/logo.png" /></a>
-				<div class="nav-collapse collapse">
-					<ul class="nav">
-						<li><a href="#queue"><i class="icon-download-alt"></i> $T('menu-queue')</a></li>
-						<li><a href="#history"><i class="icon-folder-close"></i> $T('menu-history')</a></li>
-						<li><a href="#status"><i class="icon-tasks"></i> $T('menu-cons')</a></li>
-						<li><a href="./config/"><i class="icon-cogs"></i> $T('menu-config')</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-question-sign"></i> Help <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="http://wiki.sabnzbd.org" target="_blank">$T('menu-wiki')</a></li>
-								<li><a href="http://forums.sabnzbd.org" target="_blank">$T('menu-forums')</a></li>
-								<li><a href="http://www.sabnzbd.org/live-chat" target="_blank">$T('menu-irc')</a></li>
-								<li class="divider"></li>
-								<li><a href="http://aforty.github.io/sabnzbd-knockstrap" target="_blank"><i class="icon-info-sign"></i> Knockstrap Project</a></li>
-								<li><a href="http://twitter.com/aforty" target="_blank"><i class="icon-twitter-sign"></i> @aforty</a></li>
-							</ul>
-						</li>
-					</ul>
-				
-					<ul class="nav pull-right">
-						<li><a class="callout" href="#addNZB" data-toggle="modal"><i class="icon-white icon-plus"></i> Add NZB</a></li>
-						<li><a class="callout" href="#options" data-toggle="modal"><i class="icon-white icon-cog"></i> Options</a></li>
-						<li><a class="callout" href="#" data-bind="click: queue.toggleQueueState"><i data-bind="attr: { 'class': 'icon-white icon-' + (queue.isPaused() ? 'play' : 'pause') }"></i> <span data-bind="text: queue.isPaused() ? 'Resume' : 'Pause'"></span></a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-off icon-white"></i> <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#" data-bind="click: restart">Restart</a></li>
-								<li><a href="#" data-bind="click: shutdown">Shutdown</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
+		<div class="container">
+			<button type="button" class="btn navbar-btn" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="glyphicon-bar"></span><span class="glyphicon-bar"></span><span class="glyphicon-bar"></span>
+			</button>
+			<a class="navbar-brand callout" href="."><img src="./static/images/logo.png" /></a>
+			<div class="navbar-collapse collapse">
+				<ul class="nav">
+					<li><a href="#queue"><i class="glyphicon-download-alt"></i> $T('menu-queue')</a></li>
+					<li><a href="#history"><i class="glyphicon-folder-close"></i> $T('menu-history')</a></li>
+					<li><a href="#status"><i class="glyphicon-tasks"></i> $T('menu-cons')</a></li>
+					<li><a href="./config/"><i class="glyphicon-cogs"></i> $T('menu-config')</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon-question-sign"></i> Help <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="http://wiki.sabnzbd.org" target="_blank">$T('menu-wiki')</a></li>
+							<li><a href="http://forums.sabnzbd.org" target="_blank">$T('menu-forums')</a></li>
+							<li><a href="http://www.sabnzbd.org/live-chat" target="_blank">$T('menu-irc')</a></li>
+							<li class="divider"></li>
+							<li><a href="http://aforty.github.io/sabnzbd-knockstrap" target="_blank"><i class="glyphicon-info-sign"></i> Knockstrap Project</a></li>
+							<li><a href="http://twitter.com/aforty" target="_blank"><i class="glyphicon-twitter-sign"></i> @aforty</a></li>
+						</ul>
+					</li>
+				</ul>
+
+				<ul class="nav pull-right">
+					<li><a class="callout" href="#addNZB" data-toggle="modal"><i class="glyphicon-white glyphicon-plus"></i> Add NZB</a></li>
+					<li><a class="callout" href="#options" data-toggle="modal"><i class="glyphicon-white glyphicon-cog"></i> Options</a></li>
+					<li><a class="callout" href="#" data-bind="click: queue.toggleQueueState"><i data-bind="attr: { 'class': 'glyphicon-white glyphicon-' + (queue.isPaused() ? 'play' : 'pause') }"></i> <span data-bind="text: queue.isPaused() ? 'Resume' : 'Pause'"></span></a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon-off glyphicon-white"></i> <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" data-bind="click: restart">Restart</a></li>
+							<li><a href="#" data-bind="click: shutdown">Shutdown</a></li>
+						</ul>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Add NZB modal -->
 	<div id="addNZB" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addNZBLabel" aria-hidden="true">
 		<div class="modal-header">
@@ -92,24 +90,24 @@
 		</div>
 		<div class="modal-body">
 			<div class="container">
-				<div class="row-fluid">
-					<div class="span6">
+				<div class="row">
+					<div class="col-md-6">
 						<form data-bind="submit: addUrl">
 							<fieldset>
 								<legend>$T('add') URL</legend>
 								<label>URL</label>
-								<input type="text" class="input-large" name="url" placeholder="Paste your URL" />
+								<input type="text" class="input-lg" name="url" placeholder="Paste your URL" />
 								<br />
 								<button type="submit" class="btn btn-primary">Add</button>
 							</fieldset>
 						</form>
 					</div>
-					<div class="span6">
+					<div class="col-md-6">
 						<form data-bind="submit: addFileFromForm">
 							<fieldset>
 								<legend>$T('addFile')</legend>
 								<label>File</label>
-								<input type="file" class="input-large" id="file" />
+								<input type="file" class="input-lg" id="file" />
 								<br />
 								<button type="submit" class="btn btn-primary">Add</button>
 							</fieldset>
@@ -134,27 +132,27 @@
 				<div class="control-group">
 					<label class="control-label" for="refreshRate">Refresh Rate</label>
 					<div class="controls">
-						<div class="input-append">
-							<input id="refreshRate" class="span1" type="text" pattern="\d*" placeholder="2" data-bind="idevicify: { 'type': 'number' }, value: refreshRate" />
-							<span class="add-on">second(s)</span>
+						<div class="input-group">
+							<input id="refreshRate" class="col-md-1" type="text" pattern="\d*" placeholder="2" data-bind="idevicify: { 'type': 'number' }, value: refreshRate" />
+							<span class="input-group-addon">second(s)</span>
 						</div>
 					</div>
 				</div>
 				<div class="control-group" data-bind="with: queue">
 					<label class="control-label" for="speedLimit">Speed Limit</label>
 					<div class="controls">
-						<div class="input-append">
-							<input id="speedLimit" class="span1" type="text" pattern="\d*" placeholder="No Limit" data-bind="idevicify: { 'type': 'number' }, value: speedLimit" />
-							<span class="add-on">KB/s</span>
+						<div class="input-group">
+							<input id="speedLimit" class="col-md-1" type="text" pattern="\d*" placeholder="No Limit" data-bind="idevicify: { 'type': 'number' }, value: speedLimit" />
+							<span class="input-group-addon">KB/s</span>
 						</div>
-						<button class="btn btn-small" data-bind="toggle: { value: hasSpeedLimit, effect: 'fade' }, click: clearSpeedLimit">Clear</button>
+						<button class="btn btn-sm" data-bind="toggle: { value: hasSpeedLimit, effect: 'fade' }, click: clearSpeedLimit">Clear</button>
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="queueSlotsPerPage">Queue items per page</label>
 					<div class="controls">
 						<div>
-							<input id="queueSlotsPerPage" class="span1" type="text" pattern="\d*" placeholder="20" data-bind="idevicify: { 'type': 'number' }, value: queue.itemsPerPage" />
+							<input id="queueSlotsPerPage" class="col-md-1" type="text" pattern="\d*" placeholder="20" data-bind="idevicify: { 'type': 'number' }, value: queue.itemsPerPage" />
 						</div>
 					</div>
 				</div>
@@ -162,7 +160,7 @@
 					<label class="control-label" for="historySlotsPerPage">History items per page</label>
 					<div class="controls">
 						<div>
-							<input id="historySlotsPerPage" class="span1" type="text" pattern="\d*" placeholder="5" data-bind="idevicify: { 'type': 'number' }, value: history.itemsPerPage" />
+							<input id="historySlotsPerPage" class="col-md-1" type="text" pattern="\d*" placeholder="5" data-bind="idevicify: { 'type': 'number' }, value: history.itemsPerPage" />
 						</div>
 					</div>
 				</div>
@@ -198,23 +196,23 @@
 	<!-- Queue -->
 	<div id="queue" class="container queue" data-bind="with: queue">
 		<div class="page-header">
-			<h2><i class="icon-download-alt"></i> Queue</h2>
+			<h2><i class="glyphicon-download-alt"></i> Queue</h2>
 			<h4 data-bind="toggle: { value: showDownloadSpeed, effect: 'fade' }">
 				<span data-bind="text: downloadSpeed"></span> <span data-bind="visible: hasSpeedLimit">(limited)</span> (~<span data-bind="text: timeRemaining"></span> remaining)
 			</h4>
 		</div>
 		<div data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, sortable: { data: items, afterMove: moveItem, allowDrop: true }">
 			<div class="wrapper">
-				<div class="item hero-unit">
+				<div class="item jumbotron">
 					<div class="header">
 						<div class="title">
 						  <h3 data-bind="text: name, click: editName, visible: !editingName()"></h3>
 						  <input data-bind="value: editedName, visible: editingName, hasfocus: editingName" />
 						</div>
 						<div class="tools">
-							<a class="btn btn-mini btn-tiny" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="icon-trash"></i></a>
-							<a class="btn btn-mini btn-tiny btn-move" href="#" alt="Move"><i class="icon-move"></i></a>
-							<a class="btn btn-mini btn-tiny" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'icon-chevron-up' : 'icon-chevron-down' }"></i></a>
+							<a class="btn btn-xs btn-tiny" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon-trash"></i></a>
+							<a class="btn btn-xs btn-tiny btn-move" href="#" alt="Move"><i class="glyphicon-move"></i></a>
+							<a class="btn btn-xs btn-tiny" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down' }"></i></a>
 						</div>
 					</div>
 					<div class="info">
@@ -232,7 +230,7 @@
 						</div>
 					</div>
 					<div data-bind="toggle: { value: showMore, effect: 'slide' }">
-						<a class="btn btn-small" href="#" data-bind="click: toggleState"><i data-bind="attr: { 'class': isPaused() ? 'icon-play' : 'icon-pause' }"></i> <span data-bind="text: isPaused() ? 'Resume' : 'Pause'"></span></a>
+						<a class="btn btn-sm" href="#" data-bind="click: toggleState"><i data-bind="attr: { 'class': isPaused() ? 'glyphicon-play' : 'glyphicon-pause' }"></i> <span data-bind="text: isPaused() ? 'Resume' : 'Pause'"></span></a>
 						<select data-bind="value: category, options: \$parent.categories"></select>
 						<select data-bind="value: priority, options: \$parent.priorities, optionsValue: 'value', optionsText: 'name'"></select>
 						<select data-bind="value: option, options: \$parent.options, optionsValue: 'value', optionsText: 'name'"></select>
@@ -242,7 +240,7 @@
 			</div>
 		</div>
 		<div class="info" data-bind="toggle: { value: isEmpty(), effect: 'fade' }">
-			<p data-bind="visible: isFirstLoad()"><i class="icon-spinner icon-spin"></i> Loading...</p>
+			<p data-bind="visible: isFirstLoad()"><i class="glyphicon-spinner glyphicon-spin"></i> Loading...</p>
 			<p data-bind="visible: !isFirstLoad()">Your queue is empty.</p>
 		</div>
 		<div class="pagination pagination-small" data-bind="visible: hasMultiplePages">
@@ -255,7 +253,7 @@
 	<!-- History -->
 	<div id="history" class="container history" data-bind="with: history">
 		<div class="page-header">
-			<h2><i class="icon-folder-close"></i> History</h2>
+			<h2><i class="glyphicon-folder-close"></i> History</h2>
 			<h4 data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></h4>
 		</div>
 		<div data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, template: { foreach: items }">
@@ -264,39 +262,39 @@
 					<div class="header">
 						<div class="title">
 							<h3>
-								<i class="icon-circle-blank" data-bind="visible: state('queued')"></i>
-								<i class="icon-refresh icon-spin" data-bind="visible: state('processing')"></i>
-								<i class="icon-warning-sign" data-bind="visible: state('failed')"></i>
-								<i class="icon-ok" data-bind="visible: state('completed')"></i>
+								<i class="glyphicon-circle-blank" data-bind="visible: state('queued')"></i>
+								<i class="glyphicon-refresh glyphicon-spin" data-bind="visible: state('processing')"></i>
+								<i class="glyphicon-warning-sign" data-bind="visible: state('failed')"></i>
+								<i class="glyphicon-ok" data-bind="visible: state('completed')"></i>
 								<span data-bind="text: name"></span>
 							</h3>
 							<h4>
-								<span class="visible-desktop">&#8212;&nbsp;</span><span data-bind="text: status, visible: actionLine() == '' && !state('processing')"></span>&nbsp;<span data-bind="text: '- ' + actionLine(), visible: actionLine() != '' && state('processing')"></span><span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
+								<span class="visible-lg">&#8212;&nbsp;</span><span data-bind="text: status, visible: actionLine() == '' && !state('processing')"></span>&nbsp;<span data-bind="text: '- ' + actionLine(), visible: actionLine() != '' && state('processing')"></span><span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
 						</h4>
 						</div>
 						<div class="tools">
-						  <a class="btn btn-mini btn-tiny" href="#" alt="Retry" data-bind="click: \$parent.retryItem, visible: state('failed')"><i class="icon-retweet"></i></a>
-							<a class="btn btn-mini btn-tiny" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="icon-trash"></i></a>
-							<a class="btn btn-mini btn-tiny" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'icon-chevron-up' : 'icon-chevron-down' }"></i></a>
+						  <a class="btn btn-xs btn-tiny" href="#" alt="Retry" data-bind="click: \$parent.retryItem, visible: state('failed')"><i class="glyphicon-retweet"></i></a>
+							<a class="btn btn-xs btn-tiny" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon-trash"></i></a>
+							<a class="btn btn-xs btn-tiny" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down' }"></i></a>
 						</div>
 					</div>
 					<div class="details" data-bind="toggle: { value: showMore, effect: 'slide' }">
 						<div class="row">
-							<div class="span1 title">Category:</div>
-							<div class="span10 value" data-bind="text: category"></div>
+							<div class="col-md-1 title">Category:</div>
+							<div class="col-md-10 value" data-bind="text: category"></div>
 						</div>
 						<div class="row">
-							<div class="span1 title">Size:</div>
-							<div class="span10 value" data-bind="text: size"></div>
+							<div class="col-md-1 title">Size:</div>
+							<div class="col-md-10 value" data-bind="text: size"></div>
 						</div>
 						<div class="row">
-							<div class="span1 title">Path:</div>
-							<div class="span10 value" data-bind="text: path"></div>
+							<div class="col-md-1 title">Path:</div>
+							<div class="col-md-10 value" data-bind="text: path"></div>
 						</div>
 						<span data-bind="foreach: stages">
 							<div class="row">
-								<div class="span1 title"><span data-bind="text: name"></span>:</div>
-								<div class="span10 value" data-bind="html: actions.join('<br />')"></div>
+								<div class="col-md-1 title"><span data-bind="text: name"></span>:</div>
+								<div class="col-md-10 value" data-bind="html: actions.join('<br />')"></div>
 							</div>
 						</span>
 					</div>
@@ -304,7 +302,7 @@
 			</div>
 		</div>
 		<div class="info" data-bind="toggle: { value: isEmpty(), effect: 'fade' }">
-			<p data-bind="visible: isFirstLoad()"><i class="icon-spinner icon-spin"></i> Loading...</p>
+			<p data-bind="visible: isFirstLoad()"><i class="glyphicon-spinner glyphicon-spin"></i> Loading...</p>
 			<p data-bind="visible: !isFirstLoad()">Your history is empty.</p>
 		</div>
 		<div class="pagination pagination-small" data-bind="visible: hasMultiplePages">
@@ -317,23 +315,23 @@
 	<!-- Status -->
 	<div id="status" class="status container" data-bind="with: status">
 		<div class="page-header">
-			<h2><i class="icon-tasks"></i> Status</h2>
+			<h2><i class="glyphicon-tasks"></i> Status</h2>
 			<h4 data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></h4>
 		</div>
 		<div class="warnings" data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, template: { foreach: items, beforeRemove: hideItem, afterAdd: showItem }">
 			<div data-bind="attr: { 'class': 'alert alert-' + cssType() }">
 				<div class="row">
-				<div class="span9"><strong data-bind="text: type"></strong> <span data-bind="text: text"></span></div>
-				<div class="span2 pull-right timestamp"><span data-bind="text: date"></span></div>
+				<div class="col-md-9"><strong data-bind="text: type"></strong> <span data-bind="text: text"></span></div>
+				<div class="col-md-2 pull-right timestamp"><span data-bind="text: date"></span></div>
 				</div>
 			</div>
 		</div>
 		<div class="info" data-bind="toggle: { value: isEmpty(), effect: 'fade' }">
-			<p data-bind="visible: isFirstLoad()"><i class="icon-spinner icon-spin"></i> Loading...</p>
+			<p data-bind="visible: isFirstLoad()"><i class="glyphicon-spinner glyphicon-spin"></i> Loading...</p>
 			<p data-bind="visible: !isFirstLoad()">You have no warnings or errors.</p>
 		</div>
 	</div>
 	
 	<!-- File Drop Zone -->
-  <div class="fileDropOverlay modal-backdrop fade in"><i class="icon icon-plus-sign-alt"></i></div>
+  <div class="fileDropOverlay modal-backdrop fade in"><i class="glyphicon glyphicon-plus-sign-alt"></i></div>
 </body>

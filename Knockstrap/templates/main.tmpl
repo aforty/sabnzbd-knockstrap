@@ -44,7 +44,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand callout" href="."><img src="./static/images/logo.png" /></a>
+				<a class="navbar-brand callout" href="."><img src="static/images/logo.png" style="height: 25px;" /></a>
 			</div> <!-- /.navbar-header -->
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -276,7 +276,7 @@
 								<span data-bind="text: name"></span>
 							</h3>
 							<h4>
-								<span class="visible-lg">&#8212;&nbsp;</span><span data-bind="text: status, visible: actionLine() == '' && !state('processing')"></span>&nbsp;<span data-bind="text: '- ' + actionLine(), visible: actionLine() != '' && state('processing')"></span><span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
+								<span class="visible-desktop">&#8212;&nbsp;</span><span data-bind="text: status, visible: actionLine() == '' && !state('processing')"></span>&nbsp;<span data-bind="text: '- ' + actionLine(), visible: actionLine() != '' && state('processing')"></span><span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
 						</h4>
 						</div>
 						<div class="tools">

@@ -11,7 +11,7 @@ Knockstrap is a theme for [SABnzbd](http://sabnzbd.org/), the popular automated 
 * Responsive design: looks great on all your devices
 * Rewritten: Completely rewritten from scratch, not based on Plush
 * Update system: it will inform you when a new version of Knockstrap is available
-* Uses [KnockoutJS](http://knockoutjs.com/) and [Bootstrap 3](http://getbootstrap.com)
+* Uses [KnockoutJS](http://knockoutjs.com/), [Bootstrap 3](http://getbootstrap.com), and [Bootswatch](http://bootswatch.com/)
 
 ### How to I install it?
 Just download, extract and move the containing `Knockstrap` directory into the interfaces directory in your SABnzbd installation.
@@ -22,7 +22,7 @@ Alternatively, you can clone directly from GitHub and I trust you to know how to
 Yes I'm aware that despite my best efforts this still lacks in a few aspects behind the built-in Plush theme. Good news though, this is GitHub! So, fork the project, grab your favorite text editor, make the changes you need and send me a pull request. 
 
 ### Code? I only want to change the look...
-So you know CSS? Right on, I made it so that you can easily change the look and feel while keeping the code base. Fork the project, add a new CSS file as `Knockstrap/templates/static/stylesheets/colorschemes/yourname.css`. Next time you relaunch SABnzbd you will see your color scheme in the themes drop down as 'Knockstrap - yourname'. Cool huh?
+So you know CSS? Right on, I made it so that you can easily change the look and feel while keeping the code base. Fork the project, add a new CSS file as `Knockstrap/templates/static/stylesheets/colorschemes/yourname.css`. Next time you relaunch SABnzbd you will see your color scheme in the themes drop down as 'Knockstrap - yourname'. Cool huh? I've also included some themes from [Bootswatch](https://github.com/thomaspark/bootswatch/)
 
 Is it good enough to share with everyone else? I'd love to include it, send a pull request so that you can get proper credit. 
 

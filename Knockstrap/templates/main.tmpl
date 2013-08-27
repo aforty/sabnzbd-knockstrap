@@ -268,7 +268,7 @@
 			</h1>
 		</div>
 		<div data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, template: { foreach: items }">
-			<div class="item panel" data-bind="css: { 'panel-danger': state('failed') }">
+			<div class="panel" data-bind="css: { 'panel-danger': state('failed') }">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-md-10">
@@ -279,7 +279,7 @@
 								<i class="glyphicon glyphicon-ok" data-bind="visible: state('completed')"></i>
 								<span data-bind="text: name"></span>
 								<small>
-									<span class="visible-lg">&#8212;&nbsp;</span><span data-bind="text: status, visible: actionLine() == '' && !state('processing')"></span>&nbsp;<span data-bind="text: '- ' + actionLine(), visible: actionLine() != '' && state('processing')"></span><span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
+									<span class="visible-lg">&#8212;&nbsp;</span> <span data-bind="text: status, visible: actionLine() == '' && !state('processing')"></span>&nbsp; <span data-bind="text: '- ' + actionLine(), visible: actionLine() != '' && state('processing')"></span>&nbsp; <span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
 								</small>
 							</h2>
 						</div>

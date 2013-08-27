@@ -268,47 +268,46 @@
 			</h1>
 		</div>
 		<div data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, template: { foreach: items }">
-			<div class="wrapper">
-				<div class="item panel" data-bind="css: { 'error panel-danger': state('failed') }">
-					<div class="header panel-heading">
-						<div class="title">
-							<h3>
+			<div class="panel" data-bind="css: { 'panel-danger': state('failed') }">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-md-10">
+							<h2 class="panel-title">
 								<i class="glyphicon glyphicon-circle-blank" data-bind="visible: state('queued')"></i>
 								<i class="glyphicon glyphicon-refresh glyphicon-spin" data-bind="visible: state('processing')"></i>
 								<i class="glyphicon glyphicon-warning-sign" data-bind="visible: state('failed')"></i>
 								<i class="glyphicon glyphicon-ok" data-bind="visible: state('completed')"></i>
 								<span data-bind="text: name"></span>
-							</h3>
-							<h4>
-								<span class="visible-desktop">&#8212;&nbsp;</span><span data-bind="text: status, visible: actionLine() == '' && !state('processing')"></span>&nbsp;<span data-bind="text: '- ' + actionLine(), visible: actionLine() != '' && state('processing')"></span><span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
-						</h4>
+								<small>
+									<span class="visible-lg">&#8212;&nbsp;</span><span data-bind="text: status, visible: actionLine() == '' && !state('processing')"></span>&nbsp;<span data-bind="text: '- ' + actionLine(), visible: actionLine() != '' && state('processing')"></span><span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
+								</small>
+							</h2>
 						</div>
-						<div class="tools">
-						  <a class="btn btn-xs btn-tiny" href="#" alt="Retry" data-bind="click: \$parent.retryItem, visible: state('failed')"><i class="glyphicon glyphicon-retweet"></i></a>
+						<div class="col-md-2 tools pull-right">
+							<a class="btn btn-xs btn-tiny" href="#" alt="Retry" data-bind="click: \$parent.retryItem, visible: state('failed')"><i class="glyphicon glyphicon-retweet"></i></a>
 							<a class="btn btn-xs btn-tiny" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon glyphicon-trash"></i></a>
 							<a class="btn btn-xs btn-tiny" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
 						</div>
 					</div>
-					<div class="details panel-content" data-bind="toggle: { value: showMore, effect: 'slide' }">
-						<div class="row">
-							<div class="col-md-1 title">Category:</div>
-							<div class="col-md-10 value" data-bind="text: category"></div>
-						</div>
-						<div class="row">
-							<div class="col-md-1 title">Size:</div>
-							<div class="col-md-10 value" data-bind="text: size"></div>
-						</div>
-						<div class="row">
-							<div class="col-md-1 title">Path:</div>
-							<div class="col-md-10 value" data-bind="text: path"></div>
-						</div>
-						<span data-bind="foreach: stages">
-							<div class="row">
-								<div class="col-md-1 title"><span data-bind="text: name"></span>:</div>
-								<div class="col-md-10 value" data-bind="html: actions.join('<br />')"></div>
-							</div>
-						</span>
+				<div class="panel-body" data-bind="toggle: { value: showMore, effect: 'slide' }">
+					<div class="row">
+						<div class="col-md-1 title">Category:</div>
+						<div class="col-md-10 value" data-bind="text: category"></div>
 					</div>
+					<div class="row">
+						<div class="col-md-1 title">Size:</div>
+						<div class="col-md-10 value" data-bind="text: size"></div>
+					</div>
+					<div class="row">
+						<div class="col-md-1 title">Path:</div>
+						<div class="col-md-10 value" data-bind="text: path"></div>
+					</div>
+					<span data-bind="foreach: stages">
+						<div class="row">
+							<div class="col-md-1 title"><span data-bind="text: name"></span>:</div>
+							<div class="col-md-10 value" data-bind="html: actions.join('<br />')"></div>
+						</div>
+					</span>
 				</div>
 			</div>
 		</div>

@@ -210,8 +210,8 @@
 		</div>
 		<div data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, sortable: { data: items, afterMove: moveItem, allowDrop: true }">
 			<div class="wrapper">
-				<div class="item jumbotron">
-					<div class="header">
+				<div class="item panel">
+					<div class="header panel-heading">
 						<div class="title">
 						  <h3 data-bind="text: name, click: editName, visible: !editingName()"></h3>
 						  <input data-bind="value: editedName, visible: editingName, hasfocus: editingName" />
@@ -222,26 +222,28 @@
 							<a class="btn btn-xs btn-tiny" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
 						</div>
 					</div>
-					<div class="info">
-						<span data-bind="text: status"></span>&nbsp;
-						<span data-bind="visible: hasData">
-							&#8212;&nbsp;
-							<span data-bind="text: downloadedMB"></span> of <span data-bind="text: totalMB"></span> MB
-						</span>
-					</div>
-					<div class="progress-container" style="display: none;" data-bind="toggle: { value: showProgressBar, effect: 'fade' }">
-						<div data-bind="attr: { 'class': isDownloading() ? 'progress progress-striped active' : 'progress' }">
-							<div class="progress-bar" aria-valuemin="0" aria-valuemax="100" data-bind="attr: { 'style': 'width: ' + percentage() + '%;', 'aria-valuenow': percentage() }">
-								<div class="sr-only pull-right"><span data-bind="text: percentage"></span>%</div>
+					<div class="panel-content">
+						<div class="info">
+							<span data-bind="text: status"></span>&nbsp;
+							<span data-bind="visible: hasData">
+								&#8212;&nbsp;
+								<span data-bind="text: downloadedMB"></span> of <span data-bind="text: totalMB"></span> MB
+							</span>
+						</div>
+						<div class="progress-container" style="display: none;" data-bind="toggle: { value: showProgressBar, effect: 'fade' }">
+							<div data-bind="attr: { 'class': isDownloading() ? 'progress progress-striped active' : 'progress' }">
+								<div class="progress-bar" aria-valuemin="0" aria-valuemax="100" data-bind="attr: { 'style': 'width: ' + percentage() + '%;', 'aria-valuenow': percentage() }">
+									<div class="sr-only pull-right"><span data-bind="text: percentage"></span>%</div>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div data-bind="toggle: { value: showMore, effect: 'slide' }">
-						<a class="btn btn-sm" href="#" data-bind="click: toggleState"><i data-bind="attr: { 'class': isPaused() ? 'glyphicon glyphicon-play' : 'glyphicon-pause' }"></i> <span data-bind="text: isPaused() ? 'Resume' : 'Pause'"></span></a>
-						<select data-bind="value: category, options: \$parent.categories"></select>
-						<select data-bind="value: priority, options: \$parent.priorities, optionsValue: 'value', optionsText: 'name'"></select>
-						<select data-bind="value: option, options: \$parent.options, optionsValue: 'value', optionsText: 'name'"></select>
-						<select data-bind="value: script, options: \$parent.scripts, visible: \$parent.hasScripts"></select>
+						<div data-bind="toggle: { value: showMore, effect: 'slide' }">
+							<a class="btn btn-sm" href="#" data-bind="click: toggleState"><i data-bind="attr: { 'class': isPaused() ? 'glyphicon glyphicon-play' : 'glyphicon-pause' }"></i> <span data-bind="text: isPaused() ? 'Resume' : 'Pause'"></span></a>
+							<select data-bind="value: category, options: \$parent.categories"></select>
+							<select data-bind="value: priority, options: \$parent.priorities, optionsValue: 'value', optionsText: 'name'"></select>
+							<select data-bind="value: option, options: \$parent.options, optionsValue: 'value', optionsText: 'name'"></select>
+							<select data-bind="value: script, options: \$parent.scripts, visible: \$parent.hasScripts"></select>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -265,8 +267,8 @@
 		</div>
 		<div data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, template: { foreach: items }">
 			<div class="wrapper">
-				<div class="item jumbotron" data-bind="css: { 'error': state('failed') }">
-					<div class="header">
+				<div class="item panel" data-bind="css: { 'error panel-danger': state('failed') }">
+					<div class="header panel-heading">
 						<div class="title">
 							<h3>
 								<i class="glyphicon glyphicon-circle-blank" data-bind="visible: state('queued')"></i>
@@ -285,7 +287,7 @@
 							<a class="btn btn-xs btn-tiny" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
 						</div>
 					</div>
-					<div class="details" data-bind="toggle: { value: showMore, effect: 'slide' }">
+					<div class="details panel-content" data-bind="toggle: { value: showMore, effect: 'slide' }">
 						<div class="row">
 							<div class="col-md-1 title">Category:</div>
 							<div class="col-md-10 value" data-bind="text: category"></div>

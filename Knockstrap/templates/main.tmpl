@@ -211,9 +211,9 @@
 							<input data-bind="value: editedName, visible: editingName, hasfocus: editingName" />
 						</div>
 						<div class="col-md-2 pull-right tools">
-							<a class="btn btn-xs btn-tiny" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon glyphicon-trash"></i></a>
-							<a class="btn btn-xs btn-tiny btn-move" href="#" alt="Move"><i class="glyphicon glyphicon-move"></i></a>
-							<a class="btn btn-xs btn-tiny" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
+							<a class="btn btn-xs btn-default" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon glyphicon-trash"></i></a>
+							<a class="btn btn-xs btn-default btn-move" href="#" alt="Move"><i class="glyphicon glyphicon-move"></i></a>
+							<a class="btn btn-xs btn-default" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
 						</div>
 					</div>
 				</div>
@@ -233,7 +233,7 @@
 						</div>
 					</div>
 					<div data-bind="toggle: { value: showMore, effect: 'slide' }">
-						<a class="btn btn-sm" href="#" data-bind="click: toggleState"><i data-bind="attr: { 'class': isPaused() ? 'glyphicon glyphicon-play' : 'glyphicon glyphicon-pause' }"></i> <span data-bind="text: isPaused() ? 'Resume' : 'Pause'"></span></a>
+						<a class="btn btn-sm btn-default" href="#" data-bind="click: toggleState"><i data-bind="attr: { 'class': isPaused() ? 'glyphicon glyphicon-play' : 'glyphicon glyphicon-pause' }"></i> <span data-bind="text: isPaused() ? 'Resume' : 'Pause'"></span></a>
 						<select data-bind="value: category, options: \$parent.categories"></select>
 						<select data-bind="value: priority, options: \$parent.priorities, optionsValue: 'value', optionsText: 'name'"></select>
 						<select data-bind="value: option, options: \$parent.options, optionsValue: 'value', optionsText: 'name'"></select>
@@ -277,9 +277,9 @@
 							</h3>
 						</div>
 						<div class="col-md-2 tools pull-right">
-							<a class="btn btn-xs btn-tiny" href="#" alt="Retry" data-bind="click: \$parent.retryItem, visible: state('failed')"><i class="glyphicon glyphicon-retweet"></i></a>
-							<a class="btn btn-xs btn-tiny" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon glyphicon-trash"></i></a>
-							<a class="btn btn-xs btn-tiny" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
+							<a class="btn btn-xs btn-default" href="#" alt="Retry" data-bind="click: \$parent.retryItem, visible: state('failed')"><i class="glyphicon glyphicon-retweet"></i></a>
+							<a class="btn btn-xs btn-default" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon glyphicon-trash"></i></a>
+							<a class="btn btn-xs btn-default" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
 						</div>
 					</div>
 				</div>

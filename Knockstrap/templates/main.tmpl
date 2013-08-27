@@ -210,15 +210,19 @@
 			</h2>
 		</div>
 		<div data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, sortable: { data: items, afterMove: moveItem, allowDrop: true }">
-			<div class="panel">
+			<div class="panel panel-default">
 				<div class="panel-heading">
-					  <h3 class="panel-title" data-bind="text: name, click: editName, visible: !editingName()"></h3>
-					  <input data-bind="value: editedName, visible: editingName, hasfocus: editingName" />
+					<div class="row">
+						<div class="col-md-10">
+							<h3 class="panel-title" data-bind="text: name, click: editName, visible: !editingName()"></h3>
+							<input data-bind="value: editedName, visible: editingName, hasfocus: editingName" />
+						</div>
+						<div class="col-md-2 pull-right tools">
+							<a class="btn btn-xs btn-tiny" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon glyphicon-trash"></i></a>
+							<a class="btn btn-xs btn-tiny btn-move" href="#" alt="Move"><i class="glyphicon glyphicon-move"></i></a>
+							<a class="btn btn-xs btn-tiny" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
+						</div>
 					</div>
-					<div class="tools">
-						<a class="btn btn-xs btn-tiny" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon glyphicon-trash"></i></a>
-						<a class="btn btn-xs btn-tiny btn-move" href="#" alt="Move"><i class="glyphicon glyphicon-move"></i></a>
-						<a class="btn btn-xs btn-tiny" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
 				</div>
 				<div class="panel-body">
 					<div class="info">

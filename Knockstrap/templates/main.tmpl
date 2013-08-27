@@ -231,8 +231,8 @@
 					</div>
 					<div class="progress-container" style="display: none;" data-bind="toggle: { value: showProgressBar, effect: 'fade' }">
 						<div data-bind="attr: { 'class': isDownloading() ? 'progress progress-striped active' : 'progress' }">
-							<div class="bar" data-bind="attr: { 'style': 'width: ' + percentage() + '%;' }">
-								<div class="indicator pull-right"><span data-bind="text: percentage"></span>%</div>
+							<div class="progress-bar" aria-valuemin="0" aria-valuemax="100" data-bind="attr: { 'style': 'width: ' + percentage() + '%;', 'aria-valuenow': percentage() }">
+								<div class="sr-only pull-right"><span data-bind="text: percentage"></span>%</div>
 							</div>
 						</div>
 					</div>
@@ -321,7 +321,7 @@
 	
 	<!-- Status -->
 	<div id="status" class="status container" data-bind="with: status">
-		<div class="page-header">
+		<div class="page-header" style="margin: 0px;">
 			<h2><i class="glyphicon glyphicon-tasks"></i> Status</h2>
 			<h4 data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></h4>
 		</div>
@@ -340,5 +340,5 @@
 	</div>
 	
 	<!-- File Drop Zone -->
-  <div class="fileDropOverlay modal-backdrop fade in"><i class="glyphicon glyphicon-plus-sign-alt"></i></div>
+  <div class="fileDropOverlay modal-backdrop fade in"><i class="glyphicon glyphicon-plus-sign"></i></div>
 </body>

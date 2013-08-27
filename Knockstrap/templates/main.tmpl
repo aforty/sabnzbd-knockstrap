@@ -87,38 +87,36 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h3 id="addNZBLabel">Add an NZB</h3>
+					<h3 class="modal-title" id="addNZBLabel">Add an NZB</h3>
 				</div>
 				<div class="modal-body">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-6">
-								<form data-bind="submit: addUrl">
-									<fieldset>
-										<legend>$T('add') URL</legend>
-										<label>URL</label>
-										<input type="text" class="input-lg" name="url" placeholder="Paste your URL" required />
-										<br />
-										<button type="submit" class="btn btn-primary">Add</button>
-									</fieldset>
-								</form>
-							</div>
-							<div class="col-md-6">
-								<form data-bind="submit: addFileFromForm">
-									<fieldset>
-										<legend>$T('addFile')</legend>
-										<label>File</label>
-										<input type="file" class="input-lg" id="file" required />
-										<br />
-										<button type="submit" class="btn btn-primary">Add</button>
-									</fieldset>
-								</form>
-							</div>
+					<div class="row">
+						<div class="col-md-6">
+							<form data-bind="submit: addUrl">
+								<fieldset>
+									<legend>$T('add') URL</legend>
+									<label>URL</label>
+									<input type="text" class="input-md" name="url" placeholder="Paste your URL" required />
+									<br />
+									<button type="submit" class="btn btn-primary">Add</button>
+								</fieldset>
+							</form>
+						</div>
+						<div class="col-md-6">
+							<form data-bind="submit: addFileFromForm">
+								<fieldset>
+									<legend>$T('addFile')</legend>
+									<label>File</label>
+									<input type="file" class="input-md" id="file" required />
+									<br />
+									<button type="submit" class="btn btn-primary">Add</button>
+								</fieldset>
+							</form>
 						</div>
 					</div>
-				</div>
+				</div> <!-- /.modal-body -->
 				<div class="modal-footer">
-					<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+					<button class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div> <!-- modal-content -->
 		</div> <!-- /.model-dialog -->
@@ -133,46 +131,41 @@
 					<h3 id="optionsLabel">Options</h3>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal">
-						<div class="control-group">
-							<label class="control-label" for="refreshRate">Refresh Rate</label>
-							<div class="controls">
-								<div class="input-group">
-									<input id="refreshRate" class="col-md-1 form-control" type="text" pattern="\d*" placeholder="2" data-bind="idevicify: { 'type': 'number' }, value: refreshRate" />
-									<span class="input-group-addon">second(s)</span>
-								</div>
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label class="control-label col-md-4" for="refreshRate">Refresh Rate</label>
+							<div class="input-group col-md-4">
+								<input id="refreshRate" class="form-control" type="text" pattern="\d*" placeholder="2" data-bind="idevicify: { 'type': 'number' }, value: refreshRate" />
+								<span class="input-group-addon">second(s)</span>
 							</div>
 						</div>
-						<div class="control-group" data-bind="with: queue">
-							<label class="control-label" for="speedLimit">Speed Limit</label>
-							<div class="controls">
-								<div class="input-group">
-									<input id="speedLimit" class="col-md-1 form-control" type="text" pattern="\d*" placeholder="No Limit" data-bind="idevicify: { 'type': 'number' }, value: speedLimit" />
-									<span class="input-group-addon">KB/s</span>
-								</div>
-								<button class="btn btn-sm" data-bind="toggle: { value: hasSpeedLimit, effect: 'fade' }, click: clearSpeedLimit">Clear</button>
+						<br />
+						<div class="form-group" data-bind="with: queue">
+							<label class="control-label col-md-4" for="speedLimit">Speed Limit</label>
+							<div class="input-group col-md-4">
+								<input id="speedLimit" class="form-control" type="text" pattern="\d*" placeholder="No Limit" data-bind="idevicify: { 'type': 'number' }, value: speedLimit" />
+								<span class="input-group-addon">KB/s</span>
+							</div>
+							<button class="btn btn-primary btn-sm" data-bind="toggle: { value: hasSpeedLimit, effect: 'fade' }, click: clearSpeedLimit">Clear</button>
+						</div>
+						<br />
+						<div class="form-group">
+							<label class="control-label col-md-4" for="queueSlotsPerPage">Queue items per page</label>
+							<div class="input-group col-md-4">
+								<input id="queueSlotsPerPage" class="col-md-4 form-control" type="text" pattern="\d*" placeholder="20" data-bind="idevicify: { 'type': 'number' }, value: queue.itemsPerPage" />
 							</div>
 						</div>
-						<div class="control-group">
-							<label class="control-label" for="queueSlotsPerPage">Queue items per page</label>
-							<div class="controls">
-								<div>
-									<input id="queueSlotsPerPage" class="col-md-1 form-control" type="text" pattern="\d*" placeholder="20" data-bind="idevicify: { 'type': 'number' }, value: queue.itemsPerPage" />
-								</div>
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label" for="historySlotsPerPage">History items per page</label>
-							<div class="controls">
-								<div>
-									<input id="historySlotsPerPage" class="col-md-1 form-control" type="text" pattern="\d*" placeholder="5" data-bind="idevicify: { 'type': 'number' }, value: history.itemsPerPage" />
-								</div>
+						<br />
+						<div class="form-group">
+							<label class="control-label col-md-4" for="historySlotsPerPage">History items per page</label>
+							<div class="input-group col-md-4">
+								<input id="historySlotsPerPage" class="col-md-4 form-control" type="text" pattern="\d*" placeholder="5" data-bind="idevicify: { 'type': 'number' }, value: history.itemsPerPage" />
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+					<button class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div> <!-- modal-content -->
 		</div> <!-- /.model-dialog -->
@@ -325,7 +318,7 @@
 	
 	<!-- Status -->
 	<div id="status" class="status container" data-bind="with: status">
-		<div class="page-header" style="margin: 0px;">
+		<div class="page-header">
 			<h2><i class="glyphicon glyphicon-tasks"></i> Status 
 				<small data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></small>
 			</h2>

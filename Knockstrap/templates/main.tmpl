@@ -279,7 +279,7 @@
 								<i class="glyphicon glyphicon-ok" data-bind="visible: state('completed')"></i>
 								<span data-bind="text: name"></span>
 								<small>
-									&nbsp;<span data-bind="text: status, visible: actionLine() == '' && !state('processing')"></span>&nbsp;<span data-bind="text: '- ' + actionLine(), visible: actionLine() != '' && state('processing')"></span>&nbsp;<span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
+									<span class="visible-lg">&#8212;&nbsp;</span> <span data-bind="text: status, visible: actionLine() == '' && !state('processing')"></span>&nbsp; <span data-bind="text: '- ' + actionLine(), visible: actionLine() != '' && state('processing')"></span>&nbsp; <span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
 								</small>
 							</h2>
 						</div>

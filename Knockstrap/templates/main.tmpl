@@ -238,7 +238,7 @@
 							</div>
 						</div>
 						<div data-bind="toggle: { value: showMore, effect: 'slide' }">
-							<a class="btn btn-sm" href="#" data-bind="click: toggleState"><i data-bind="attr: { 'class': isPaused() ? 'glyphicon glyphicon-play' : 'glyphicon-pause' }"></i> <span data-bind="text: isPaused() ? 'Resume' : 'Pause'"></span></a>
+							<a class="btn btn-sm" href="#" data-bind="click: toggleState"><i data-bind="attr: { 'class': isPaused() ? 'glyphicon glyphicon-play' : 'glyphicon glyphicon-pause' }"></i> <span data-bind="text: isPaused() ? 'Resume' : 'Pause'"></span></a>
 							<select data-bind="value: category, options: \$parent.categories"></select>
 							<select data-bind="value: priority, options: \$parent.priorities, optionsValue: 'value', optionsText: 'name'"></select>
 							<select data-bind="value: option, options: \$parent.options, optionsValue: 'value', optionsText: 'name'"></select>

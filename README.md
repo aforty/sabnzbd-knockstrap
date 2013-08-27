@@ -1,6 +1,8 @@
 Knockstrap
 ==================
 
+forked from [aforty](https://github.com/aforty/sabnzbd-knockstrap)
+
 ### What is this?
 Knockstrap is a theme for [SABnzbd](http://sabnzbd.org/), the popular automated Usenet download tool. It brings a larger, more modern, brighter and cleaner look to one of your favorite tools.
 
@@ -9,7 +11,7 @@ Knockstrap is a theme for [SABnzbd](http://sabnzbd.org/), the popular automated 
 * Responsive design: looks great on all your devices
 * Rewritten: Completely rewritten from scratch, not based on Plush
 * Update system: it will inform you when a new version of Knockstrap is available
-* Uses KnockoutJS and Bootstrap
+* Uses KnockoutJS and Bootstrap 3
 
 ### How to I install it?
 Just download, extract and move the containing `Knockstrap` directory into the interfaces directory in your SABnzbd installation.
@@ -32,4 +34,4 @@ While I was at it, I wasn't going to use Cheetah's somewhat arcane markup langua
 Combine these two and you have the magic sauce for a beautiful and responsive client side application worthy of SABnzbd. Hope you enjoy!
 
 ### I need to contact you!
-Ok, follow me on Twitter [@aforty](http://twitter.com/aforty), or head over to the [original forum thread](http://forums.sabnzbd.org/viewtopic.php?t=12626) and post your thoughts or questions. 
+Ok, follow me on Twitter [@btsuhako](http://twitter.com/btsuhako), or head over to the [original forum thread](http://forums.sabnzbd.org/viewtopic.php?t=12626) and post your thoughts or questions. 

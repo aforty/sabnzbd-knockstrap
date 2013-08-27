@@ -203,10 +203,11 @@
 	<!-- Queue -->
 	<div id="queue" class="container queue" data-bind="with: queue">
 		<div class="page-header">
-			<h2><i class="glyphicon glyphicon-download-alt"></i> Queue</h2>
-			<h4 data-bind="toggle: { value: showDownloadSpeed, effect: 'fade' }">
-				<span data-bind="text: downloadSpeed"></span> <span data-bind="visible: hasSpeedLimit">(limited)</span> (~<span data-bind="text: timeRemaining"></span> remaining)
-			</h4>
+			<h1><i class="glyphicon glyphicon-download-alt"></i> Queue 
+				<small data-bind="toggle: { value: showDownloadSpeed, effect: 'fade' }">
+					<span data-bind="text: downloadSpeed"></span> <span data-bind="visible: hasSpeedLimit">(limited)</span> (~<span data-bind="text: timeRemaining"></span> remaining)
+				</small>
+			</h1>
 		</div>
 		<div data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, sortable: { data: items, afterMove: moveItem, allowDrop: true }">
 			<div class="wrapper">
@@ -262,8 +263,9 @@
 	<!-- History -->
 	<div id="history" class="container history" data-bind="with: history">
 		<div class="page-header">
-			<h2><i class="glyphicon glyphicon-folder-close"></i> History</h2>
-			<h4 data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></h4>
+			<h1><i class="glyphicon glyphicon-folder-close"></i> History 
+				<small data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></small>
+			</h1>
 		</div>
 		<div data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, template: { foreach: items }">
 			<div class="wrapper">
@@ -324,8 +326,9 @@
 	<!-- Status -->
 	<div id="status" class="status container" data-bind="with: status">
 		<div class="page-header" style="margin: 0px;">
-			<h2><i class="glyphicon glyphicon-tasks"></i> Status</h2>
-			<h4 data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></h4>
+			<h1><i class="glyphicon glyphicon-tasks"></i> Status 
+				<small data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></small>
+			</h1>
 		</div>
 		<div class="warnings" data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, template: { foreach: items, beforeRemove: hideItem, afterAdd: showItem }">
 			<div data-bind="attr: { 'class': 'alert alert-' + cssType() }">

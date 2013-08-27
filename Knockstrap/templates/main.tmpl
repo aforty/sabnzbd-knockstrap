@@ -139,7 +139,6 @@
 								<span class="input-group-addon">second(s)</span>
 							</div>
 						</div>
-						<br />
 						<div class="form-group" data-bind="with: queue">
 							<label class="control-label col-md-4" for="speedLimit">Speed Limit</label>
 							<div class="input-group col-md-4">
@@ -148,14 +147,12 @@
 							</div>
 							<button class="btn btn-primary btn-sm" data-bind="toggle: { value: hasSpeedLimit, effect: 'fade' }, click: clearSpeedLimit">Clear</button>
 						</div>
-						<br />
 						<div class="form-group">
 							<label class="control-label col-md-4" for="queueSlotsPerPage">Queue items per page</label>
 							<div class="input-group col-md-4">
 								<input id="queueSlotsPerPage" class="col-md-4 form-control" type="text" pattern="\d*" placeholder="20" data-bind="idevicify: { 'type': 'number' }, value: queue.itemsPerPage" />
 							</div>
 						</div>
-						<br />
 						<div class="form-group">
 							<label class="control-label col-md-4" for="historySlotsPerPage">History items per page</label>
 							<div class="input-group col-md-4">

@@ -268,7 +268,7 @@
 			</h2>
 		</div>
 		<div data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, template: { foreach: items }">
-			<div class="panel" data-bind="css: { 'panel-danger': state('failed') }">
+			<div class="panel" data-bind="css: { state('failed') ? 'panel-danger' : 'panel-default' }">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-md-10">

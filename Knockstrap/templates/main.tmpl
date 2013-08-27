@@ -250,7 +250,7 @@
 			<p data-bind="visible: isFirstLoad()"><i class="glyphicon glyphicon-spinner glyphicon-spin"></i> Loading...</p>
 			<p data-bind="visible: !isFirstLoad()">Your queue is empty.</p>
 		</div>
-		<div class="pagination pagination-small" data-bind="visible: hasMultiplePages">
+		<div class="pagination pagination-sm" data-bind="visible: hasMultiplePages">
 			<ul data-bind="foreach: pages">
 				<li data-bind="attr: { 'class': state }"><a href="#" data-bind="click: \$parent.selectPage, text: title"></a></li>
 			</ul>
@@ -312,8 +312,8 @@
 			<p data-bind="visible: isFirstLoad()"><i class="glyphicon glyphicon-spinner glyphicon-spin"></i> Loading...</p>
 			<p data-bind="visible: !isFirstLoad()">Your history is empty.</p>
 		</div>
-		<div class="pagination pagination-small" data-bind="visible: hasMultiplePages">
-			<ul data-bind="foreach: pages">
+		<div data-bind="visible: hasMultiplePages">
+			<ul data-bind="foreach: pages" class="pagination pagination-small">
 				<li data-bind="attr: { 'class': state }"><a href="#" data-bind="click: \$parent.selectPage, text: title"></a></li>
 			</ul>
 		</div>

@@ -7,17 +7,17 @@
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-title" content="SABnzbd">
-	
+
 	<title data-bind="text: title"></title>
-	
+
 	<link rel="shortcut icon" href="static/images/favicon.ico" />
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="rss?mode=history&apikey=$session" />
-	
+
 	<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="static/stylesheets/font-awesome.min.css" />
 	<link rel="stylesheet" type="text/css" href="static/stylesheets/knockstrap.css"/>
 	<link rel="stylesheet" type="text/css" href="static/stylesheets/colorschemes/${color_scheme}.css"/>
-	
+
 	<script type="text/javascript" src="static/javascript/jquery-2.0.3.min.js"></script>
 	<script type="text/javascript" src="static/javascript/jquery-ui-1.10.3.custom.min.js"></script>
 	<script type="text/javascript" src="static/javascript/knockout-2.3.0.js"></script>
@@ -150,7 +150,7 @@
 						<div class="form-group" data-bind="with: queue">
 							<label class="control-label col-md-4" for="pauseInt">Pause time</label>
 							<div class="input-group col-md-4">
-								<input id="pauseInt" class="form-control" type="text" pattern="\d*" placeholder="0" data-bind="idevicify: { 'type': 'number' }, value: pauseInt" />
+								<input id="pauseInt" class="form-control" type="text" placeholder="0" data-bind="idevicify: { 'type': 'number' }, value: pauseInt" />
 								<span class="input-group-addon">minutes</span>
 							</div>
 							<button class="btn btn-primary btn-sm" data-bind="toggle: { value: hasPauseInt, effect: 'fade' }, click: clearPauseInt">Clear</button>
@@ -189,7 +189,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- SABnzbd update notification -->
 	<div class="container updater" style="display: none;" data-bind="with: queue.updater, visible: queue.updater.showUpdateBanner">
 		<div class="alert alert-info alert-dismissable">
@@ -197,11 +197,18 @@
 			<h4>Update available for SABnzbd (<span data-bind="text: latestVersion"></span>) - <a class="alert-link" href="#" data-bind="attr: { 'href': downloadUrl }">Download</a></h4>
 		</div>
 	</div>
-	
+
+	<!-- Timed paused update notification -->
+	<div class="container updater" style="display: none;" data-bind="with: queue, visible: queue.hasPauseInt">
+		<div class="alert alert-info">
+			<strong>Paused for </strong><span data-bind="text: pauseInt"></span>
+		</div>
+	</div>
+
 	<!-- Queue -->
 	<div id="queue" class="container queue" data-bind="with: queue">
 		<div class="page-header">
-			<h2><i class="glyphicon glyphicon-download-alt"></i> Queue 
+			<h2><i class="glyphicon glyphicon-download-alt"></i> Queue
 				<small data-bind="toggle: { value: showDownloadSpeed, effect: 'fade' }">
 					<span data-bind="text: downloadSpeed"></span> <span data-bind="visible: hasSpeedLimit">(limited)</span> (~<span data-bind="text: timeRemaining"></span> remaining)
 				</small>
@@ -257,11 +264,11 @@
 			</ul>
 		</div>
 	</div>
-	
+
 	<!-- History -->
 	<div id="history" class="container history" data-bind="with: history">
 		<div class="page-header">
-			<h2><i class="glyphicon glyphicon-folder-close"></i> History 
+			<h2><i class="glyphicon glyphicon-folder-close"></i> History
 				<small data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></small>
 			</h2>
 		</div>
@@ -320,11 +327,11 @@
 			</ul>
 		</div>
 	</div>
-	
+
 	<!-- Status -->
 	<div id="status" class="status container" data-bind="with: status">
 		<div class="page-header">
-			<h2><i class="glyphicon glyphicon-tasks"></i> Status 
+			<h2><i class="glyphicon glyphicon-tasks"></i> Status
 				<small data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></small>
 			</h2>
 		</div>
@@ -341,7 +348,7 @@
 			<p data-bind="visible: !isFirstLoad()">You have no warnings or errors.</p>
 		</div>
 	</div>
-	
+
 	<!-- File Drop Zone -->
   <div class="fileDropOverlay modal-backdrop fade in"><i class="glyphicon glyphicon-plus-sign"></i></div>
 </body>

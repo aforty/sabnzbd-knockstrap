@@ -411,6 +411,7 @@ var QueueListModel = function() {
 	var speedLimit = ko.observable("");
 	var isFirstLoad = ko.observable(true);
 	var itemsPerPageInt = ko.observable();
+	var pauseInt = ko.observable("");
 	var itemsPerPage = ko.computed({
 		read: function() { 
 			itemsPerPageInt(parseInt(localStorage.queueItemsPerPage || defaultItemsPerPage)); 
@@ -431,6 +432,10 @@ var QueueListModel = function() {
 	// computables
 	var hasSpeedLimit = ko.computed(function() {
 		return speedLimit() && !isNaN(speedLimit());
+	}, self);
+
+	var hasPauseInt = ko.computed(function() {
+		return pauseInt() && !isNaN(pauseInt());
 	}, self);
 	
 	var hasScripts = ko.computed(function() {
@@ -461,6 +466,13 @@ var QueueListModel = function() {
 			
 		setSpeedLimit(parseInt(v));
 	});
+
+	pauseInt.subscribe(function(v) {
+		if (!v || isNaN(v) || parseInt(v) < 0)
+			pauseInt("");
+			
+		setPauseInt(parseInt(v));
+	})
 	
 	itemsTotal.subscribe(function(v) {
 		SetPages();
@@ -643,6 +655,10 @@ var QueueListModel = function() {
 		speedLimit(0);
 	};
 
+	var clearPauseInt = function() {
+		pauseInt(0);
+	}
+
 	var SetPages = function() {
     	// reset paging
     	var pagesToAdd = [];
@@ -671,6 +687,22 @@ var QueueListModel = function() {
 		refresh({ force: true });
 	}
 
+	var setPauseInt = function(pauseInt) {
+		//if(isPaused())
+		//	return;
+
+		console.log("Changing pause time");
+
+		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "config", name: "set_pause", value: pauseInt, output: "json", apikey: apiKey } }))
+		.then(function(r) {
+			if (r && r.status == true)
+				console.log("Pause interval set", r);
+		})
+		.fail(function(e) {
+			console.error("Error changing pause time", this, e);
+		});
+	};
+
 	var showItem = function(e) { if (e.nodeType === 1) $(e).hide().fadeIn() }
 	var hideItem = function(e) { if (e.nodeType === 1) $(e).fadeOut(function() { $(e).remove(); }) }
 	
@@ -692,15 +724,19 @@ var QueueListModel = function() {
 	self.hasMultiplePages = hasMultiplePages;
 	self.pages = pages;
 	self.updater = updater;
+	self.pauseInt = pauseInt;
+	self.hasPauseInt = pauseInt;
 	
 	// public methods
 	self.refresh = refresh;
 	self.selectPage = selectPage;
 	self.clearSpeedLimit = clearSpeedLimit;
+	self.clearPauseInt = clearPauseInt;
 	self.setSpeedLimit = setSpeedLimit;
 	self.moveItem = moveItem;
 	self.removeItem = removeItem;
 	self.toggleQueueState = toggleQueueState;
+	self.setPauseInt = setPauseInt;
 };
 
 var HistoryModel = function(data) {
@@ -1198,7 +1234,7 @@ var MainModel = function() {
 		setRefresh(v);
 	});
 	
-  var isPaused = ko.observable(false);
+  	var isPaused = ko.observable(false);
 	var pauseRefresh = ko.observable(false);
 	var queue = new QueueListModel();
 	var history = new HistoryListModel();
@@ -1271,8 +1307,8 @@ var MainModel = function() {
 		});
 	};
 	
-	var addFileFromForm = function(form){
-	  return addFile($(form.file)[0].files[0]);
+	var addFileFromForm = function(form) {
+		return addFile($(form.file)[0].files[0]);
 	};
 	
 	var addFile = function(file) {

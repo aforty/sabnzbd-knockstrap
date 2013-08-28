@@ -21,6 +21,7 @@ select { height: 26px; font-size: 12px; width: auto; margin-bottom: 0; }
 .container .info { font-size: 16px; }
 
 .modal-body input[type="file"] { width: 260px; }
+body.modal-open { margin-right: 0px; }
 
 .wrapper { display: inline-block; width: 100%; vertical-align: top; }
 .wrapper .item { 

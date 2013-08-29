@@ -10,7 +10,7 @@ select { height: 26px; font-size: 12px; width: auto; margin-bottom: 0; }
 .navbar { -webkit-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.9); box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.9); border-bottom: 0px;}
 .navbar .navbar-header { margin: 0 5px 0 0; }
 .navbar-brand { padding: 10px 20px 5px; }
-.navbar-brand .callout img { height: 25px; }
+.navbar-brand .callout img { height: 35px; }
 
 .container .info { font-size: 16px; }
 

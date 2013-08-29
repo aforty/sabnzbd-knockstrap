@@ -13,10 +13,10 @@
 	<link rel="shortcut icon" href="static/images/favicon.ico" />
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="rss?mode=history&apikey=$session" />
 
-	<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="static/stylesheets/colorschemes/${color_scheme}.css"/>
 	<link rel="stylesheet" type="text/css" href="static/stylesheets/font-awesome.min.css" />
 	<link rel="stylesheet" type="text/css" href="static/stylesheets/knockstrap.css"/>
-	<link rel="stylesheet" type="text/css" href="static/stylesheets/colorschemes/${color_scheme}.css"/>
 
 	<script type="text/javascript" src="static/javascript/jquery-2.0.3.min.js"></script>
 	<script type="text/javascript" src="static/javascript/jquery-ui-1.10.3.custom.min.js"></script>
@@ -36,7 +36,7 @@
 	</script>
 </head>
 <body data-bind="filedrop: { overlaySelector: '.fileDropOverlay', onFileDrop: addFile }">
-	<div class="navbar navbar-inverse navbar-static-top">
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigatrion">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -44,7 +44,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand callout" href="."><img src="static/images/logo.png" style="height: 25px;" /></a>
+				<a class="navbar-brand callout" href="."><img src="static/images/logo.png" /></a>
 			</div> <!-- /.navbar-header -->
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -338,8 +338,8 @@
 		<div class="warnings" data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, template: { foreach: items, beforeRemove: hideItem, afterAdd: showItem }">
 			<div data-bind="attr: { 'class': 'alert alert-' + cssType() }">
 				<div class="row">
-				<div class="col-md-9"><strong data-bind="text: type"></strong> <span data-bind="text: text"></span></div>
-				<div class="col-md-2 pull-right timestamp"><span data-bind="text: date"></span></div>
+					<div class="col-md-9"><strong data-bind="text: type"></strong> <span data-bind="text: text"></span></div>
+					<div class="col-md-2 pull-right timestamp"><span data-bind="text: date"></span></div>
 				</div>
 			</div>
 		</div>
@@ -347,8 +347,45 @@
 			<p data-bind="visible: isFirstLoad()"><i class="glyphicon glyphicon-spinner glyphicon-spin"></i> Loading...</p>
 			<p data-bind="visible: !isFirstLoad()">You have no warnings or errors.</p>
 		</div>
+
 	</div>
 
+	<!-- SABnzbd statistics -->
+	<div class="panel panel-default" id="statistics" data-bind="with: queue">
+		<div class="panel-heading">
+			<h3 class="panel-title"></h3>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-2 col-md-offset-2 container">
+					<i class="glyphicon glyphicon-book"></i>&nbsp;<strong>Cached articles</strong>
+					<div class="container">
+						<span data-bind="text: cacheArt"></span>
+					</div>
+				</div>
+				<div class="col-md-2 container">
+					<i class="glyphicon glyphicon-download"></i>&nbsp;<strong>Cache size</strong>
+					<div class="container">
+						<span data-bind="text: cacheSize"></span>
+					</div>
+				</div>
+				<div class="col-md-2 container">
+					<i class="glyphicon glyphicon-dashboard"></i>&nbsp;<strong>Download speed</strong>
+					<div class="container">
+						<span data-bind="text: downloadSpeed"></span>
+					</div>
+				</div>
+				<div class="col-md-2 container">
+					<i class="glyphicon glyphicon-stats"></i>&nbsp;<strong>Queued</strong>
+					<div class="container">
+						<span data-bind="text: sizeLeft"></span> / <span data-bind="text: size"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<!-- File Drop Zone -->
-  <div class="fileDropOverlay modal-backdrop fade in"><i class="glyphicon glyphicon-plus-sign"></i></div>
+	<div class="fileDropOverlay modal-backdrop fade in"><i class="glyphicon glyphicon-plus-sign"></i></div>
 </body>

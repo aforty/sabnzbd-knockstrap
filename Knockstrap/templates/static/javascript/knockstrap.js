@@ -412,6 +412,12 @@ var QueueListModel = function() {
 	var isFirstLoad = ko.observable(true);
 	var itemsPerPageInt = ko.observable();
 	var pauseInt = ko.observable("");
+	var sizeLeft = ko.observable("");
+	var size = ko.observable("");
+	var cacheSize = ko.observable("");
+	var cacheArt = ko.observable("");
+
+	// computables
 	var itemsPerPage = ko.computed({
 		read: function() {
 			itemsPerPageInt(parseInt(localStorage.queueItemsPerPage || defaultItemsPerPage));
@@ -424,12 +430,10 @@ var QueueListModel = function() {
 			itemsPerPageInt(v);
 		}
 	}, self);
-
 	itemsPerPage.subscribe(function(v) {
 		refresh({ force: true });
 	});
 
-	// computables
 	var hasSpeedLimit = ko.computed(function() {
 		return speedLimit() && !isNaN(speedLimit());
 	}, self);
@@ -584,6 +588,10 @@ var QueueListModel = function() {
 				categories($.map(r.queue.categories, function(i) { return i == "*" || i == "None" ? "Default" : i }));
 
 			isPaused(r.queue.paused);
+			sizeLeft(r.queue.sizeleft);
+			size(r.queue.size);
+			cacheSize(r.queue.cache_size);
+			cacheArt(r.queue.cache_art);
 
 			if (r.queue.speedlimit !== speedLimit()) {
 				disableSpeedLimitUpdate = true;
@@ -729,6 +737,10 @@ var QueueListModel = function() {
 	self.updater = updater;
 	self.pauseInt = pauseInt;
 	self.hasPauseInt = hasPauseInt;
+	self.sizeLeft = sizeLeft;
+	self.size = size;
+	self.cacheSize = cacheSize;
+	self.cacheArt = cacheArt;
 
 	// public methods
 	self.refresh = refresh;

@@ -12,7 +12,9 @@ Knockstrap is a theme for [SABnzbd](http://sabnzbd.org/), the popular automated 
 * Uses KnockoutJS and Bootstrap
 
 ### How to I install it?
-Just download, extract and move the containing `Knockstrap` directory into the interfaces directory in your SABnzbd installation.
+* [Download the latest version](https://github.com/aforty/sabnzbd-knockstrap/archive/master.zip)
+* Extract the `Knockstrap` folder into `/path/to/sabnzbd/interfaces/knockstrap`
+* Select `Knockstrap` from the available skins (`config->general->skin`)
 
 Alternatively, you can clone directly from GitHub and I trust you to know how to do that. 
 

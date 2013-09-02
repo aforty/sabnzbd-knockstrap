@@ -15,6 +15,7 @@ Knockstrap is a theme for [SABnzbd](http://sabnzbd.org/), the popular automated 
 * [Download the latest version](https://github.com/aforty/sabnzbd-knockstrap/archive/master.zip)
 * Extract the `Knockstrap` folder into `/path/to/sabnzbd/interfaces/knockstrap`
 * Select `Knockstrap` from the available skins (`config->general->skin`)
+* Restart SABnzbd to see the changes take effect
 
 Alternatively, you can clone directly from GitHub and I trust you to know how to do that. 
 

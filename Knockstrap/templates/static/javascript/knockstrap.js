@@ -968,7 +968,6 @@ var HistoryListModel = function() {
 				}
 				else {
 					items.splice(0, 0, new HistoryModel(data));
-					console.log("Added new history item", data);
 				}
 			});
 			

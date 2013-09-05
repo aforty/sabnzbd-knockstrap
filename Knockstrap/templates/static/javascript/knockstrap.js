@@ -369,6 +369,7 @@ var QueueListModel = function() {
 	// constants
 	var refreshXhr;
 	var defaultItemsPerPage = 20;
+	var pauseInt = ko.observable("");
 	var speed = ko.observable(0);
 	var speedMetric = ko.observable();
 	var updater = new SABUpdaterModel();
@@ -411,7 +412,6 @@ var QueueListModel = function() {
 	var speedLimit = ko.observable("");
 	var isFirstLoad = ko.observable(true);
 	var itemsPerPageInt = ko.observable();
-	var pauseInt = ko.observable("");
 	var sizeLeft = ko.observable("");
 	var size = ko.observable("");
 	var cacheSize = ko.observable("");
@@ -469,11 +469,6 @@ var QueueListModel = function() {
 			speedLimit("");
 		setSpeedLimit(parseInt(v));
 	});
-
-	pauseInt.subscribe(function(v) {
-		if (v && !isNaN(v) && parseInt(v) >=0)
-			setPauseInt(parseInt(v));
-	})
 
 	itemsTotal.subscribe(function(v) {
 		SetPages();
@@ -600,9 +595,7 @@ var QueueListModel = function() {
 			}
 
 			if (r.queue.pause_int !== pauseInt()) {
-				disablePauseIntUpdate = true;
 				pauseInt(r.queue.pause_int);
-				disablePauseIntUpdate = false;
 			}
 
 			$.each(r.queue.slots, function() {
@@ -645,7 +638,6 @@ var QueueListModel = function() {
 	};
 
 	var disableSpeedLimitUpdate = false;
-	var disablePauseIntUpdate = false;
 
 	var setSpeedLimit = function(speedLimit) {
 		if (disableSpeedLimitUpdate)
@@ -663,28 +655,9 @@ var QueueListModel = function() {
 		});
 	};
 
-	var setPauseInt = function(pauseInt) {
-		if (disablePauseIntUpdate)
-			return;
-
-		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "config", name: "set_pause", value: pauseInt, output: "json", apikey: apiKey } }))
-		.then(function(r) {
-			if (r && r.status == true)
-				console.log("Changed speed", r);
-		})
-		.fail(function(e) {
-			console.error("Error changing pause time", this, e);
-		});
-	};
-
 	var clearSpeedLimit = function() {
 		speedLimit(0);
 	};
-
-	var clearPauseInt = function() {
-		pauseInt(0);
-		setPauseInt(pauseInt());
-	}
 
 	var SetPages = function() {
     	// reset paging
@@ -735,20 +708,18 @@ var QueueListModel = function() {
 	self.hasMultiplePages = hasMultiplePages;
 	self.pages = pages;
 	self.updater = updater;
-	self.pauseInt = pauseInt;
-	self.hasPauseInt = hasPauseInt;
 	self.sizeLeft = sizeLeft;
 	self.size = size;
 	self.cacheSize = cacheSize;
 	self.cacheArt = cacheArt;
+	self.pauseInt = pauseInt;
+	self.hasPauseInt = hasPauseInt;
 
 	// public methods
 	self.refresh = refresh;
 	self.selectPage = selectPage;
 	self.clearSpeedLimit = clearSpeedLimit;
-	self.clearPauseInt = clearPauseInt;
 	self.setSpeedLimit = setSpeedLimit;
-	self.setPauseInt = setPauseInt;
 	self.moveItem = moveItem;
 	self.removeItem = removeItem;
 	self.toggleQueueState = toggleQueueState;
@@ -1251,6 +1222,7 @@ var MainModel = function() {
 
   	var isPaused = ko.observable(false);
 	var pauseRefresh = ko.observable(false);
+	var pauseInt = ko.observable("");
 	var queue = new QueueListModel();
 	var history = new HistoryListModel();
 	var status = new StatusListModel();
@@ -1261,6 +1233,10 @@ var MainModel = function() {
 			return "SABnzbd";
 
 		return "SABnzbd - " + queue.downloadSpeed();
+	}, self);
+
+	var hasPauseInt = ko.computed(function() {
+		return pauseInt() && pauseInt() !== "0";
 	}, self);
 
 	var setRefresh = function(interval) {
@@ -1345,6 +1321,17 @@ var MainModel = function() {
 		});
 	};
 
+	var setPauseInt = function(pauseInt) {
+		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "config", name: "set_pause", value: pauseInt, output: "json", apikey: apiKey } }))
+		.then(function(r) {
+			if (r && r.status == true)
+				console.log("Changed speed", r);
+		})
+		.fail(function(e) {
+			console.error("Error changing pause time", this, e);
+		});
+	};
+
 	// public properties
 	self.title = title;
 	self.isPaused = isPaused;
@@ -1360,6 +1347,7 @@ var MainModel = function() {
 	self.addUrl = addUrl;
 	self.addFile = addFile;
 	self.addFileFromForm = addFileFromForm;
+	self.setPauseInt = setPauseInt;
 
 	// initialize
 	refresh({ force: true });

@@ -69,7 +69,7 @@
 					<li><a class="callout" href="#addNZB" data-toggle="modal"><i class="glyphicon glyphicon-white glyphicon-plus"></i> Add NZB</a></li>
 					<li><a class="callout" href="#options" data-toggle="modal"><i class="glyphicon glyphicon-white glyphicon-cog"></i> Options</a></li>
 					<li><a class="callout" href="#" data-bind="click: queue.toggleQueueState"><i data-bind="attr: { 'class': 'glyphicon glyphicon-white glyphicon-' + (queue.isPaused() ? 'play' : 'pause') }"></i> <span data-bind="text: queue.isPaused() ? 'Resume' : 'Pause'"></span></a>
-						<li class="dropdown">
+						<li class="dropdown" data-bind="visible: !queue.isPaused()">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(10, data, event) }">10 minutes</a></li>

@@ -7,17 +7,17 @@
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-title" content="SABnzbd">
-	
+
 	<title data-bind="text: title"></title>
-	
+
 	<link rel="shortcut icon" href="static/images/favicon.ico" />
 	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="rss?mode=history&apikey=$session" />
-	
-	<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css" />
+
+	<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="static/stylesheets/colorschemes/${color_scheme}.css"/>
 	<link rel="stylesheet" type="text/css" href="static/stylesheets/font-awesome.min.css" />
 	<link rel="stylesheet" type="text/css" href="static/stylesheets/knockstrap.css"/>
-	<link rel="stylesheet" type="text/css" href="static/stylesheets/colorschemes/${color_scheme}.css"/>
-	
+
 	<script type="text/javascript" src="static/javascript/jquery-2.0.3.min.js"></script>
 	<script type="text/javascript" src="static/javascript/jquery-ui-1.10.3.custom.min.js"></script>
 	<script type="text/javascript" src="static/javascript/knockout-2.3.0.js"></script>
@@ -36,7 +36,7 @@
 	</script>
 </head>
 <body data-bind="filedrop: { overlaySelector: '.fileDropOverlay', onFileDrop: addFile }">
-	<div class="navbar navbar-inverse navbar-static-top">
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigatrion">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -44,7 +44,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand callout" href="."><img src="static/images/logo.png" style="height: 25px;" /></a>
+				<a class="navbar-brand callout" href="."><img src="static/images/logo.png" /></a>
 			</div> <!-- /.navbar-header -->
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -68,9 +68,23 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a class="callout" href="#addNZB" data-toggle="modal"><i class="glyphicon glyphicon-white glyphicon-plus"></i> Add NZB</a></li>
 					<li><a class="callout" href="#options" data-toggle="modal"><i class="glyphicon glyphicon-white glyphicon-cog"></i> Options</a></li>
-					<li><a class="callout" href="#" data-bind="click: queue.toggleQueueState"><i data-bind="attr: { 'class': 'glyphicon glyphicon-white glyphicon-' + (queue.isPaused() ? 'play' : 'pause') }"></i> <span data-bind="text: queue.isPaused() ? 'Resume' : 'Pause'"></span></a></li>
+					<li><a class="callout" href="#" data-bind="click: queue.toggleQueueState"><i data-bind="attr: { 'class': 'glyphicon glyphicon-white glyphicon-' + (queue.isPaused() ? 'play' : 'pause') }"></i> <span data-bind="text: queue.isPaused() ? 'Resume' : 'Pause'"></span></a>
+						<li class="dropdown" data-bind="visible: !queue.isPaused()">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(10, data, event) }">10 minutes</a></li>
+								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(20, data, event) }">20 minutes</a></li>
+								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(30, data, event) }">30 minutes</a></li>
+								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(60, data, event) }">1 hour</a></li>
+								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(180, data, event) }">3 hours</a></li>
+								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(300, data, event) }">5 hours</a></li>
+								<li class="divider"></li>
+								<li><a href="#" data-bind="click: queue.toggleQueueState"><span data-bind="text: queue.isPaused() ? 'Resume' : 'Pause indefinitely'"></span></a></li>
+							</ul>
+						</li>
+					</li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-off glyphicon-white"></i> <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-off glyphicon-white"></i><b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="#" data-bind="click: restart">Restart</a></li>
 							<li><a href="#" data-bind="click: shutdown">Shutdown</a></li>
@@ -181,7 +195,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- SABnzbd update notification -->
 	<div class="container updater" style="display: none;" data-bind="with: queue.updater, visible: queue.updater.showUpdateBanner">
 		<div class="alert alert-info alert-dismissable">
@@ -189,11 +203,18 @@
 			<h4>Update available for SABnzbd (<span data-bind="text: latestVersion"></span>) - <a class="alert-link" href="#" data-bind="attr: { 'href': downloadUrl }">Download</a></h4>
 		</div>
 	</div>
-	
+
+	<!-- Timed paused update notification -->
+	<div class="container updater" style="display: none;" data-bind="with: queue, visible: queue.hasPauseInt">
+		<div class="alert alert-info">
+			<strong>Paused for </strong><span data-bind="text: pauseInt"></span>
+		</div>
+	</div>
+
 	<!-- Queue -->
 	<div id="queue" class="container queue" data-bind="with: queue">
 		<div class="page-header">
-			<h2><i class="glyphicon glyphicon-download-alt"></i> Queue 
+			<h2><i class="glyphicon glyphicon-download-alt"></i> Queue
 				<small data-bind="toggle: { value: showDownloadSpeed, effect: 'fade' }">
 					<span data-bind="text: downloadSpeed"></span> <span data-bind="visible: hasSpeedLimit">(limited)</span> (~<span data-bind="text: timeRemaining"></span> remaining)
 				</small>
@@ -249,11 +270,11 @@
 			</ul>
 		</div>
 	</div>
-	
+
 	<!-- History -->
 	<div id="history" class="container history" data-bind="with: history">
 		<div class="page-header">
-			<h2><i class="glyphicon glyphicon-folder-close"></i> History 
+			<h2><i class="glyphicon glyphicon-folder-close"></i> History
 				<small data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></small>
 			</h2>
 		</div>
@@ -312,19 +333,19 @@
 			</ul>
 		</div>
 	</div>
-	
+
 	<!-- Status -->
 	<div id="status" class="status container" data-bind="with: status">
 		<div class="page-header">
-			<h2><i class="glyphicon glyphicon-tasks"></i> Status 
+			<h2><i class="glyphicon glyphicon-tasks"></i> Status
 				<small data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></small>
 			</h2>
 		</div>
 		<div class="warnings" data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, template: { foreach: items, beforeRemove: hideItem, afterAdd: showItem }">
 			<div data-bind="attr: { 'class': 'alert alert-' + cssType() }">
 				<div class="row">
-				<div class="col-md-9"><strong data-bind="text: type"></strong> <span data-bind="text: text"></span></div>
-				<div class="col-md-2 pull-right timestamp"><span data-bind="text: date"></span></div>
+					<div class="col-md-9"><strong data-bind="text: type"></strong> <span data-bind="text: text"></span></div>
+					<div class="col-md-2 pull-right timestamp"><span data-bind="text: date"></span></div>
 				</div>
 			</div>
 		</div>
@@ -332,8 +353,45 @@
 			<p data-bind="visible: isFirstLoad()"><i class="glyphicon glyphicon-spinner glyphicon-spin"></i> Loading...</p>
 			<p data-bind="visible: !isFirstLoad()">You have no warnings or errors.</p>
 		</div>
+
 	</div>
-	
+
+	<!-- SABnzbd statistics -->
+	<div class="panel panel-default" id="statistics" data-bind="with: queue">
+		<div class="panel-heading">
+			<h3 class="panel-title"></h3>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-2 col-md-offset-2 container">
+					<i class="glyphicon glyphicon-book"></i>&nbsp;<strong>Cached articles</strong>
+					<div class="container">
+						<span data-bind="text: cacheArt"></span>
+					</div>
+				</div>
+				<div class="col-md-2 container">
+					<i class="glyphicon glyphicon-download"></i>&nbsp;<strong>Cache size</strong>
+					<div class="container">
+						<span data-bind="text: cacheSize"></span>
+					</div>
+				</div>
+				<div class="col-md-2 container">
+					<i class="glyphicon glyphicon-dashboard"></i>&nbsp;<strong>Download speed</strong>
+					<div class="container">
+						<span data-bind="text: downloadSpeed"></span>
+					</div>
+				</div>
+				<div class="col-md-2 container">
+					<i class="glyphicon glyphicon-stats"></i>&nbsp;<strong>Queued</strong>
+					<div class="container">
+						<span data-bind="text: sizeLeft"></span> / <span data-bind="text: size"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<!-- File Drop Zone -->
-  <div class="fileDropOverlay modal-backdrop fade in"><i class="glyphicon glyphicon-plus-sign"></i></div>
+	<div class="fileDropOverlay modal-backdrop fade in"><i class="glyphicon glyphicon-plus-sign"></i></div>
 </body>

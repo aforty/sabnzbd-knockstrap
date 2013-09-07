@@ -19,7 +19,7 @@ Knockstrap is a theme for [SABnzbd](http://sabnzbd.org/), the popular automated 
 * Select `Knockstrap` from the available skins (`config->general->skin`)
 * Restart SABnzbd to see the changes take effect
 
-Alternatively, you can clone directly from GitHub and I trust you to know how to do that. 
+Alternatively, you can use [`git clone`](https://www.atlassian.com/git/tutorial/git-basics#!clone) to add it directly to your `interfaces` folder.
 
 ### It's missing something!
 Yes I'm aware that despite my best efforts this still lacks in a few aspects behind the built-in Plush theme. Good news though, this is GitHub! So, fork the project, grab your favorite text editor, make the changes you need and send me a pull request. 
@@ -35,6 +35,10 @@ Why does anyone do anything? I got bored. Well, I also wanted a theme that would
 While I was at it, I wasn't going to use Cheetah's somewhat arcane markup language either. Template files with special markup that get parsed on the server on every request? No thanks. So I was going to rebuild this as a client side javascript app, pulling info as needed from the available json api. Client side MVVM anyone? Enter [Knockout](http://knockoutjs.com/). 
 
 Combine these two and you have the magic sauce for a beautiful and responsive client side application worthy of SABnzbd. Hope you enjoy!
+
+### Contributions
+
+Thanks to [btsuhako](https://github.com/btsuhako) & [beingtomgreen](https://github.com/beingtomgreen) for their contributions.
 
 ### I need to contact you!
 Ok, follow me on Twitter [@btsuhako](http://twitter.com/btsuhako), or head over to the [original forum thread](http://forums.sabnzbd.org/viewtopic.php?t=12626) and post your thoughts or questions. 

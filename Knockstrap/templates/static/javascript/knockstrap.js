@@ -660,7 +660,7 @@ var QueueListModel = function() {
     		pagesToAdd.push({ title: i + 1, index: i, state: page == i ? "active" : "" });
     	pagesToAdd.push({ title: 'Next', index: page + 1, state: page == totalPages - 1 ? "disabled" : "" });
     	
-    	pages(pages);
+    	pages(pagesToAdd);
 	};
 	
 	var selectPage = function(page) {

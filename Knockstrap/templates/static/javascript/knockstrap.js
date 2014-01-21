@@ -789,7 +789,7 @@ var HistoryModel = function(data) {
 		time(data.download_time);
 		url(data.url);
 		infoUrl(data.url_info);
-		actionLine(data.action_line);
+		actionLine((data.action_line || "").replace(/\s*-\s*, " "));
 		
 		var date = new Date(0);
 		date.setUTCSeconds(data.completed);

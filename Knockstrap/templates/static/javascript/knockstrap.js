@@ -3,6 +3,12 @@ var apiKey;
 if (!window.console)
 	window.console = { error: function(){}, log: function(){}, warn: function(){} };
 
+String.prototype.formatWith = function() {
+  for(var t = this, n = arguments.length; n--;)
+    t = t.replace(new RegExp("\\{" + n + "\\}","gm"), arguments[n]);
+  return t;
+}
+
 ko.bindingHandlers.toggle = {
 	init: function (e, v) {
 		e = $(e); v = v(), toggle = ko.utils.unwrapObservable(typeof v === "object" ? v.value : v);
@@ -369,7 +375,7 @@ var QueueListModel = function() {
 	// constants
 	var refreshXhr;
 	var defaultItemsPerPage = 20;
-	var pauseInt = ko.observable("");
+	var pausedUntil = ko.observable();
 	var speed = ko.observable(0);
 	var speedMetric = ko.observable();
 	var updater = new SABUpdaterModel();
@@ -438,8 +444,25 @@ var QueueListModel = function() {
 		return speedLimit() && !isNaN(speedLimit());
 	}, self);
 
-	var hasPauseInt = ko.computed(function() {
-		return pauseInt() && pauseInt() !== "0";
+	var isTimerPaused = ko.computed(function() {
+		return pausedUntil() && pausedUntil() > (new XDate());
+	}, self);
+	
+	var pauseTimerText = ko.computed(function() {
+	  if (!isTimerPaused())
+	    return '';
+	  
+	  var diff = (pausedUntil() - (new XDate())) / 1000,
+	    diffHours = Math.floor(diff / 3600) % 24,
+      diffMins = Math.floor(diff / 60) % 60,
+      diffSecs = Math.floor(diff % 60);
+    
+	  if (diffHours > 0)
+	    return '{0} hour{1} and {2} minute{3}'.formatWith(diffHours, diffHours === 1 ? '' : 's', diffMins, diffMins === 1 ? '' : 's');
+	  else if (diffMins > 10)
+	    return '{0} minute{1}'.formatWith(diffMins, diffMins === 1 ? '' : 's');
+	  else
+	    return '{0} minute{1} and {2} second{3}'.formatWith(diffMins, diffMins === 1 ? '' : 's', diffSecs, diffSecs === 1 ? '' : 's');
 	}, self);
 
 	var hasScripts = ko.computed(function() {
@@ -496,8 +519,8 @@ var QueueListModel = function() {
 		})
 		.fail(function(e) {
 			console.error("Error moving queue", itemMoved, e);
-		itemMoved.index(e.sourceIndex);
-		itemReplaced.index(e.targetIndex);
+      itemMoved.index(e.sourceIndex);
+      itemReplaced.index(e.targetIndex);
 		});
 	};
 
@@ -528,12 +551,27 @@ var QueueListModel = function() {
 		isPaused(targetState);
 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: !targetState ? "resume" : "pause", output: "json", apikey: apiKey } }))
 		.then(function(r) {
-			if (!r.status)
+			if (!r.status) {
 				isPaused(!targetState);
+			  
+			  if (!targetState)
+			    pausedUntil(null); 
+			}
 		})
 		.fail(function(e) {
 			isPaused(!targetState);
 			console.error("Error changing queue state", this, e);
+		});
+	};
+	
+	var setPauseMinutes = function(minutes) {
+		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "config", name: "set_pause", value: minutes, output: "json", apikey: apiKey } }))
+		.then(function(r) {
+			if (r && r.status == true)
+				console.log("Paused for " + minutes + " minutes", r);
+		})
+		.fail(function(e) {
+			console.error("Error changing pause time", this, e);
 		});
 	};
 
@@ -593,9 +631,12 @@ var QueueListModel = function() {
 				speedLimit(r.queue.speedlimit);
 				disableSpeedLimitUpdate = false;
 			}
-
-			if (r.queue.pause_int !== pauseInt()) {
-				pauseInt(r.queue.pause_int);
+			
+			if (r.queue.pause_int === '0')
+			  pausedUntil(null);
+			else {
+			  var time = r.queue.pause_int.match(/(\d*):?(\d*)/)
+			  pausedUntil((new XDate()).addMinutes(parseInt(time[1])).addSeconds(parseInt(time[2])));
 			}
 
 			$.each(r.queue.slots, function() {
@@ -676,7 +717,7 @@ var QueueListModel = function() {
     		pagesToAdd.push({ title: i + 1, index: i, state: page == i ? "active" : "" });
     	pagesToAdd.push({ title: 'Next', index: page + 1, state: page == totalPages - 1 ? "disabled" : "" });
 
-    	pages(pages);
+    	pages(pagesToAdd);
 	};
 
 	var selectPage = function(page) {
@@ -712,8 +753,9 @@ var QueueListModel = function() {
 	self.size = size;
 	self.cacheSize = cacheSize;
 	self.cacheArt = cacheArt;
-	self.pauseInt = pauseInt;
-	self.hasPauseInt = hasPauseInt;
+	self.pausedUntil = pausedUntil;
+	self.pauseTimerText = pauseTimerText;
+	self.isTimerPaused = isTimerPaused;
 
 	// public methods
 	self.refresh = refresh;
@@ -723,6 +765,7 @@ var QueueListModel = function() {
 	self.moveItem = moveItem;
 	self.removeItem = removeItem;
 	self.toggleQueueState = toggleQueueState;
+	self.setPauseMinutes = setPauseMinutes;
 };
 
 var HistoryModel = function(data) {
@@ -1222,7 +1265,7 @@ var MainModel = function() {
 
   	var isPaused = ko.observable(false);
 	var pauseRefresh = ko.observable(false);
-	var pauseInt = ko.observable("");
+	var pauseInt = ko.observable();
 	var queue = new QueueListModel();
 	var history = new HistoryListModel();
 	var status = new StatusListModel();
@@ -1321,17 +1364,6 @@ var MainModel = function() {
 		});
 	};
 
-	var setPauseInt = function(pauseInt) {
-		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "config", name: "set_pause", value: pauseInt, output: "json", apikey: apiKey } }))
-		.then(function(r) {
-			if (r && r.status == true)
-				console.log("Changed speed", r);
-		})
-		.fail(function(e) {
-			console.error("Error changing pause time", this, e);
-		});
-	};
-
 	// public properties
 	self.title = title;
 	self.isPaused = isPaused;
@@ -1347,7 +1379,6 @@ var MainModel = function() {
 	self.addUrl = addUrl;
 	self.addFile = addFile;
 	self.addFileFromForm = addFileFromForm;
-	self.setPauseInt = setPauseInt;
 
 	// initialize
 	refresh({ force: true });

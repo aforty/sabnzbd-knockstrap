@@ -36,7 +36,7 @@
 	</script>
 </head>
 <body data-bind="filedrop: { overlaySelector: '.fileDropOverlay', onFileDrop: addFile }">
-	<div class="navbar navbar-inverse navbar-fixed-top" role="navigatrion">
+	<div class="navbar navbar-default navbar-fixed-top" role="navigatrion">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -48,10 +48,10 @@
 			</div> <!-- /.navbar-header -->
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="#queue"><i class="glyphicon glyphicon-download-alt"></i> $T('menu-queue')</a></li>
-					<li><a href="#history"><i class="glyphicon glyphicon-folder-close"></i> $T('menu-history')</a></li>
-					<li><a href="#status"><i class="glyphicon glyphicon-tasks"></i> $T('menu-cons')</a></li>
-					<li><a href="./config/"><i class="glyphicon glyphicon-cog"></i> $T('menu-config')</a></li>
+					<li><a href="#queue"><i class="fa fa-download"></i> $T('menu-queue')</a></li>
+					<li><a href="#history"><i class="fa fa-folder"></i> $T('menu-history')</a></li>
+					<li><a href="#status"><i class="fa fa-tasks"></i> $T('menu-cons')</a></li>
+					<li><a href="./config/"><i class="fa fa-cog"></i> $T('menu-config')</a></li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-question-sign"></i> Help <b class="caret"></b></a>
 						<ul class="dropdown-menu">
@@ -59,32 +59,30 @@
 							<li><a href="http://forums.sabnzbd.org" target="_blank">$T('menu-forums')</a></li>
 							<li><a href="http://www.sabnzbd.org/live-chat" target="_blank">$T('menu-irc')</a></li>
 							<li class="divider"></li>
-							<li><a href="http://aforty.github.io/sabnzbd-knockstrap" target="_blank"><i class="glyphicon glyphicon-info-sign"></i> Knockstrap Project</a></li>
-							<li><a href="http://twitter.com/aforty" target="_blank"><i class="glyphicon glyphicon-twitter-sign"></i> @aforty</a></li>
+							<li><a href="http://aforty.github.io/sabnzbd-knockstrap" target="_blank"><i class="fa fa-info-circle"></i> Knockstrap Project</a></li>
+							<li><a href="http://twitter.com/aforty" target="_blank"><i class="fa fa-twitter"></i> @aforty</a></li>
 						</ul>
 					</li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
-					<li><a class="callout" href="#addNZB" data-toggle="modal"><i class="glyphicon glyphicon-white glyphicon-plus"></i> Add NZB</a></li>
-					<li><a class="callout" href="#options" data-toggle="modal"><i class="glyphicon glyphicon-white glyphicon-cog"></i> Options</a></li>
-					<li><a class="callout" href="#" data-bind="click: queue.toggleQueueState"><i data-bind="attr: { 'class': 'glyphicon glyphicon-white glyphicon-' + (queue.isPaused() ? 'play' : 'pause') }"></i> <span data-bind="text: queue.isPaused() ? 'Resume' : 'Pause'"></span></a>
-						<li class="dropdown" data-bind="visible: !queue.isPaused()">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(10, data, event) }">10 minutes</a></li>
-								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(20, data, event) }">20 minutes</a></li>
-								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(30, data, event) }">30 minutes</a></li>
-								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(60, data, event) }">1 hour</a></li>
-								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(180, data, event) }">3 hours</a></li>
-								<li><a href="#" data-bind="click: function(data, event) { setPauseInt(300, data, event) }">5 hours</a></li>
-								<li class="divider"></li>
-								<li><a href="#" data-bind="click: queue.toggleQueueState"><span data-bind="text: queue.isPaused() ? 'Resume' : 'Pause indefinitely'"></span></a></li>
-							</ul>
-						</li>
-					</li>
+					<li><a href="#addNZB" data-toggle="modal"><i class="fa fa-white fa-plus"></i> Add NZB</a></li>
+					<li><a href="#options" data-toggle="modal"><i class="fa fa-white fa-cog"></i> Options</a></li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-off glyphicon-white"></i><b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i data-bind="attr: { 'class': 'fa fa-white fa-' + (queue.isPaused() ? 'pause' : 'play') }"></i> <span data-bind="text: queue.isPaused() ? 'Paused' : 'Ready'"></span>&nbsp;<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#" data-bind="click: queue.toggleQueueState"><span data-bind="text: queue.isPaused() ? 'Resume' : 'Pause'"></span></a></li>
+              <li class="divider"></li>
+              <li><a href="#" data-bind="click: function() { queue.setPauseMinutes(10) }">Pause for 10 minutes</a></li>
+              <li><a href="#" data-bind="click: function() { queue.setPauseMinutes(20) }">Pause for 20 minutes</a></li>
+              <li><a href="#" data-bind="click: function() { queue.setPauseMinutes(30) }">Pause for 30 minutes</a></li>
+              <li><a href="#" data-bind="click: function() { queue.setPauseMinutes(60) }">Pause for 1 hour</a></li>
+              <li><a href="#" data-bind="click: function() { queue.setPauseMinutes(180) }">Pause for 3 hours</a></li>
+              <li><a href="#" data-bind="click: function() { queue.setPauseMinutes(300) }">Pause for 5 hours</a></li>
+            </ul>
+          </li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-white fa-power-off"></i>&nbsp;<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="#" data-bind="click: restart">Restart</a></li>
 							<li><a href="#" data-bind="click: shutdown">Shutdown</a></li>
@@ -205,16 +203,16 @@
 	</div>
 
 	<!-- Timed paused update notification -->
-	<div class="container updater" style="display: none;" data-bind="with: queue, visible: queue.hasPauseInt">
+	<div class="container updater" style="display: none;" data-bind="with: queue, visible: queue.isTimerPaused">
 		<div class="alert alert-info">
-			<strong>Paused for </strong><span data-bind="text: pauseInt"></span>
+			<strong>Resuming in <span data-bind="text: pauseTimerText"></span></strong>
 		</div>
 	</div>
 
 	<!-- Queue -->
 	<div id="queue" class="container queue" data-bind="with: queue">
 		<div class="page-header">
-			<h2><i class="glyphicon glyphicon-download-alt"></i> Queue
+			<h2><i class="fa fa-download"></i> Queue
 				<small data-bind="toggle: { value: showDownloadSpeed, effect: 'fade' }">
 					<span data-bind="text: downloadSpeed"></span> <span data-bind="visible: hasSpeedLimit">(limited)</span> (~<span data-bind="text: timeRemaining"></span> remaining)
 				</small>
@@ -229,9 +227,9 @@
 							<input data-bind="value: editedName, visible: editingName, hasfocus: editingName" />
 						</div>
 						<div class="col-md-2 pull-right tools">
-							<a class="btn btn-xs btn-default" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon glyphicon-trash"></i></a>
-							<a class="btn btn-xs btn-default btn-move" href="#" alt="Move"><i class="glyphicon glyphicon-move"></i></a>
-							<a class="btn btn-xs btn-default" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
+							<a class="btn btn-tiny btn-default" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon glyphicon-trash"></i></a>
+							<a class="btn btn-tiny btn-default btn-move" href="#" alt="Move"><i class="glyphicon glyphicon-move"></i></a>
+							<a class="btn btn-tiny btn-default" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
 						</div>
 					</div>
 				</div>
@@ -251,7 +249,7 @@
 						</div>
 					</div>
 					<div data-bind="toggle: { value: showMore, effect: 'slide' }">
-						<a class="btn btn-sm btn-default" href="#" data-bind="click: toggleState"><i data-bind="attr: { 'class': isPaused() ? 'glyphicon glyphicon-play' : 'glyphicon glyphicon-pause' }"></i> <span data-bind="text: isPaused() ? 'Resume' : 'Pause'"></span></a>
+						<a class="btn btn-sm btn-default" href="#" data-bind="click: toggleState"><i data-bind="attr: { 'class': isPaused() ? 'fa fa-play' : 'fa fa-pause' }"></i> <span data-bind="text: isPaused() ? 'Resume' : 'Pause'"></span></a>
 						<select data-bind="value: category, options: \$parent.categories"></select>
 						<select data-bind="value: priority, options: \$parent.priorities, optionsValue: 'value', optionsText: 'name'"></select>
 						<select data-bind="value: option, options: \$parent.options, optionsValue: 'value', optionsText: 'name'"></select>
@@ -274,7 +272,7 @@
 	<!-- History -->
 	<div id="history" class="container history" data-bind="with: history">
 		<div class="page-header">
-			<h2><i class="glyphicon glyphicon-folder-close"></i> History
+			<h2><i class="fa fa-folder"></i> History
 				<small data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></small>
 			</h2>
 		</div>
@@ -284,20 +282,20 @@
 					<div class="row">
 						<div class="col-md-10">
 							<h3 class="panel-title">
-								<i class="glyphicon glyphicon-circle-blank" data-bind="visible: state('queued')"></i>
-								<i class="glyphicon glyphicon-refresh glyphicon-spin" data-bind="visible: state('processing')"></i>
-								<i class="glyphicon glyphicon-warning-sign" data-bind="visible: state('failed')"></i>
-								<i class="glyphicon glyphicon-ok" data-bind="visible: state('completed')"></i>
+								<i class="fa fa-circle-o" data-bind="visible: state('queued')"></i>
+								<i class="fa fa-refresh fa-spin" data-bind="visible: state('processing')"></i>
+								<i class="fa fa-warning" data-bind="visible: state('failed')"></i>
+								<i class="fa fa-check-circle-o" data-bind="visible: state('completed')"></i>
 								<span data-bind="text: name"></span>
 								<small>
 									&nbsp;<span data-bind="text: status, visible: actionLine() == '' && !state('processing')"></span>&nbsp;<span data-bind="text: '- ' + actionLine(), visible: actionLine() != '' && state('processing')"></span>&nbsp;<span data-bind="text: completedOn, visible: state('failed') || state('completed')"></span>
 								</small>
 							</h3>
 						</div>
-						<div class="col-md-2 tools pull-right">
-							<a class="btn btn-xs btn-default" href="#" alt="Retry" data-bind="click: \$parent.retryItem, visible: state('failed')"><i class="glyphicon glyphicon-retweet"></i></a>
-							<a class="btn btn-xs btn-default" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon glyphicon-trash"></i></a>
-							<a class="btn btn-xs btn-default" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
+						<div class="col-md-2 tools pull-right text-right">
+							<a class="btn btn-xs btn-default" href="#" alt="Retry" data-bind="click: \$parent.retryItem, visible: state('failed')"><i class="fa fa-retweet"></i></a>
+							<a class="btn btn-xs btn-default" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="fa fa-trash-o"></i></a>
+							<a class="btn btn-xs btn-default" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'fa fa-chevron-up' : 'fa fa-chevron-down' }"></i></a>
 						</div>
 					</div>
 				</div>
@@ -363,29 +361,21 @@
 		</div>
 		<div class="panel-body">
 			<div class="row">
-				<div class="col-md-2 col-md-offset-2 container">
+				<div class="col-md-2 col-md-offset-2">
 					<i class="glyphicon glyphicon-book"></i>&nbsp;<strong>Cached articles</strong>
-					<div class="container">
 						<span data-bind="text: cacheArt"></span>
-					</div>
 				</div>
-				<div class="col-md-2 container">
-					<i class="glyphicon glyphicon-download"></i>&nbsp;<strong>Cache size</strong>
-					<div class="container">
+				<div class="col-md-2">
+					<i class="fa fa-download"></i>&nbsp;<strong>Cache size</strong>
 						<span data-bind="text: cacheSize"></span>
-					</div>
 				</div>
-				<div class="col-md-2 container">
-					<i class="glyphicon glyphicon-dashboard"></i>&nbsp;<strong>Download speed</strong>
-					<div class="container">
+				<div class="col-md-2">
+					<i class="fa fa-dashboard"></i>&nbsp;<strong>Download speed</strong>
 						<span data-bind="text: downloadSpeed"></span>
-					</div>
 				</div>
-				<div class="col-md-2 container">
+				<div class="col-md-2">
 					<i class="glyphicon glyphicon-stats"></i>&nbsp;<strong>Queued</strong>
-					<div class="container">
 						<span data-bind="text: sizeLeft"></span> / <span data-bind="text: size"></span>
-					</div>
 				</div>
 			</div>
 		</div>

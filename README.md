@@ -17,7 +17,7 @@ Knockstrap is a theme for [SABnzbd](http://sabnzbd.org/), the popular automated 
 * Select `Knockstrap` from the available skins (`config->general->skin`)
 * Restart SABnzbd to see the changes take effect
 
-Alternatively, you can clone directly from GitHub and I trust you to know how to do that. 
+Alternatively, you can use [`git clone`](https://www.atlassian.com/git/tutorial/git-basics#!clone) to add it directly to your `interfaces` folder.
 
 ### It's missing something!
 Yes I'm aware that despite my best efforts this still lacks in a few aspects behind the built-in Plush theme. Good news though, this is GitHub! So, fork the project, grab your favorite text editor, make the changes you need and send me a pull request. 

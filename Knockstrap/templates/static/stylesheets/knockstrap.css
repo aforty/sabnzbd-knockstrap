@@ -158,3 +158,8 @@ body.modal-open { margin-right: 0px; }
 }
 
 */
+
+
+@media (max-width: 767px) {
+	.history .wrapper .row .title { text-align: left; }
+}

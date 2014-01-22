@@ -36,7 +36,7 @@
 	</script>
 </head>
 <body data-bind="filedrop: { overlaySelector: '.fileDropOverlay', onFileDrop: addFile }">
-	<div class="navbar navbar-default navbar-fixed-top" role="navigatrion">
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -51,14 +51,16 @@
 					<li><a href="#queue"><i class="fa fa-download"></i> $T('menu-queue')</a></li>
 					<li><a href="#history"><i class="fa fa-folder"></i> $T('menu-history')</a></li>
 					<li><a href="#status"><i class="fa fa-tasks"></i> $T('menu-cons')</a></li>
-					<li><a href="./config/"><i class="fa fa-cog"></i> $T('menu-config')</a></li>
+					<li><a href="./config/"><i class="fa fa-cogs"></i> $T('menu-config')</a></li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-question-sign"></i> Help <b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-question-circle"></i> Help <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="http://wiki.sabnzbd.org" target="_blank">$T('menu-wiki')</a></li>
+							<!-- 
+<li><a href="http://wiki.sabnzbd.org" target="_blank">$T('menu-wiki')</a></li>
 							<li><a href="http://forums.sabnzbd.org" target="_blank">$T('menu-forums')</a></li>
 							<li><a href="http://www.sabnzbd.org/live-chat" target="_blank">$T('menu-irc')</a></li>
 							<li class="divider"></li>
+ -->
 							<li><a href="http://aforty.github.io/sabnzbd-knockstrap" target="_blank"><i class="fa fa-info-circle"></i> Knockstrap Project</a></li>
 							<li><a href="http://twitter.com/aforty" target="_blank"><i class="fa fa-twitter"></i> @aforty</a></li>
 						</ul>
@@ -69,7 +71,7 @@
 					<li><a href="#addNZB" data-toggle="modal"><i class="fa fa-white fa-plus"></i> Add NZB</a></li>
 					<li><a href="#options" data-toggle="modal"><i class="fa fa-white fa-cog"></i> Options</a></li>
 					<li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i data-bind="attr: { 'class': 'fa fa-white fa-' + (queue.isPaused() ? 'pause' : 'play') }"></i> <span data-bind="text: queue.isPaused() ? 'Paused' : 'Ready'"></span>&nbsp;<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i data-bind="attr: { 'class': 'fa fa-white fa-' + (queue.isPaused() ? 'pause' : 'play') }"></i> <span data-bind="text: queue.isPaused() ? 'Paused' : queue.itemsTotal() > 0 ? 'Downloading' : 'Ready'"></span>&nbsp;<b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="#" data-bind="click: queue.toggleQueueState"><span data-bind="text: queue.isPaused() ? 'Resume' : 'Pause'"></span></a></li>
               <li class="divider"></li>
@@ -157,7 +159,7 @@
 								<input id="speedLimit" class="form-control" type="text" pattern="\d*" placeholder="No Limit" data-bind="idevicify: { 'type': 'number' }, value: speedLimit" />
 								<span class="input-group-addon">KB/s</span>
 							</div>
-							<button class="btn btn-primary btn-sm" data-bind="toggle: { value: hasSpeedLimit, effect: 'fade' }, click: clearSpeedLimit">Clear</button>
+              <button class="btn btn-default btn-sm" data-bind="toggle: { value: hasSpeedLimit, effect: 'fade' }, click: clearSpeedLimit">Clear</button>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-4" for="queueSlotsPerPage">Queue items per page</label>
@@ -227,9 +229,9 @@
 							<input data-bind="value: editedName, visible: editingName, hasfocus: editingName" />
 						</div>
 						<div class="col-md-2 pull-right tools">
-							<a class="btn btn-tiny btn-default" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="glyphicon glyphicon-trash"></i></a>
+							<a class="btn btn-tiny btn-default" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="fa fa-times-circle-o"></i></a>
 							<a class="btn btn-tiny btn-default btn-move" href="#" alt="Move"><i class="glyphicon glyphicon-move"></i></a>
-							<a class="btn btn-tiny btn-default" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down' }"></i></a>
+							<a class="btn btn-tiny btn-default" href="#" data-bind="click: toggleShowMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'fa fa-chevron-up' : 'fa fa-chevron-down' }"></i></a>
 						</div>
 					</div>
 				</div>
@@ -251,15 +253,15 @@
 					<div data-bind="toggle: { value: showMore, effect: 'slide' }">
 						<a class="btn btn-sm btn-default" href="#" data-bind="click: toggleState"><i data-bind="attr: { 'class': isPaused() ? 'fa fa-play' : 'fa fa-pause' }"></i> <span data-bind="text: isPaused() ? 'Resume' : 'Pause'"></span></a>
 						<select data-bind="value: category, options: \$parent.categories"></select>
-						<select data-bind="value: priority, options: \$parent.priorities, optionsValue: 'value', optionsText: 'name'"></select>
-						<select data-bind="value: option, options: \$parent.options, optionsValue: 'value', optionsText: 'name'"></select>
+						<select data-bind="value: priority, options: \$parent.defaults.priorities, optionsValue: 'value', optionsText: 'name'"></select>
+						<select data-bind="value: option, options: \$parent.defaults.options, optionsValue: 'value', optionsText: 'name'"></select>
 						<select data-bind="value: script, options: \$parent.scripts, visible: \$parent.hasScripts"></select>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="info" data-bind="toggle: { value: isEmpty(), effect: 'fade' }">
-			<p data-bind="visible: isFirstLoad()"><i class="glyphicon glyphicon-spinner glyphicon-spin"></i> Loading...</p>
+			<p data-bind="visible: isFirstLoad()"><i class="fa fa-refresh fa-spin"></i> Loading...</p>
 			<p data-bind="visible: !isFirstLoad()">Your queue is empty.</p>
 		</div>
 		<div class="pagination pagination-sm" data-bind="visible: hasMultiplePages">
@@ -322,7 +324,7 @@
 			</div>
 		</div>
 		<div class="info" data-bind="toggle: { value: isEmpty(), effect: 'fade' }">
-			<p data-bind="visible: isFirstLoad()"><i class="glyphicon glyphicon-spinner glyphicon-spin"></i> Loading...</p>
+			<p data-bind="visible: isFirstLoad()"><i class="fa fa-refresh fa-spin"></i> Loading...</p>
 			<p data-bind="visible: !isFirstLoad()">Your history is empty.</p>
 		</div>
 		<div data-bind="visible: hasMultiplePages">
@@ -335,12 +337,12 @@
 	<!-- Status -->
 	<div id="status" class="status container" data-bind="with: status">
 		<div class="page-header">
-			<h2><i class="glyphicon glyphicon-tasks"></i> Status
+			<h2><i class="fa fa-tasks"></i> Status
 				<small data-bind="toggle: { value: !isEmpty(), effect: 'fade' }"><a href="#" data-bind="click: clear">Clear</a></small>
 			</h2>
 		</div>
 		<div class="warnings" data-bind="toggle: { value: !isEmpty(), effect: 'fade' }, template: { foreach: items, beforeRemove: hideItem, afterAdd: showItem }">
-			<div data-bind="attr: { 'class': 'alert alert-' + cssType() }">
+			<div data-bind="attr: { 'class': 'alert alert-' + cssType }">
 				<div class="row">
 					<div class="col-md-9"><strong data-bind="text: type"></strong> <span data-bind="text: text"></span></div>
 					<div class="col-md-2 pull-right timestamp"><span data-bind="text: date"></span></div>
@@ -348,7 +350,7 @@
 			</div>
 		</div>
 		<div class="info" data-bind="toggle: { value: isEmpty(), effect: 'fade' }">
-			<p data-bind="visible: isFirstLoad()"><i class="glyphicon glyphicon-spinner glyphicon-spin"></i> Loading...</p>
+			<p data-bind="visible: isFirstLoad()"><i class="fa fa-refresh fa-spin"></i> Loading...</p>
 			<p data-bind="visible: !isFirstLoad()">You have no warnings or errors.</p>
 		</div>
 
@@ -362,7 +364,7 @@
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-2 col-md-offset-2">
-					<i class="glyphicon glyphicon-book"></i>&nbsp;<strong>Cached articles</strong>
+					<i class="fa fa-book"></i>&nbsp;<strong>Cached articles</strong>
 						<span data-bind="text: cacheArt"></span>
 				</div>
 				<div class="col-md-2">
@@ -374,7 +376,7 @@
 						<span data-bind="text: downloadSpeed"></span>
 				</div>
 				<div class="col-md-2">
-					<i class="glyphicon glyphicon-stats"></i>&nbsp;<strong>Queued</strong>
+					<i class="fa fa-bar-chart-o"></i>&nbsp;<strong>Queued</strong>
 						<span data-bind="text: sizeLeft"></span> / <span data-bind="text: size"></span>
 				</div>
 			</div>

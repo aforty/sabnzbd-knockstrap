@@ -229,7 +229,7 @@
 							<input data-bind="value: editedName, visible: editingName, hasfocus: editingName" />
 						</div>
 						<div class="col-md-2 pull-right tools">
-							<a class="btn btn-tiny btn-default" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="fa fa-times-circle-o"></i></a>
+							<a class="btn btn-tiny btn-default" href="#" alt="Remove" data-bind="click: \$parent.removeItem.bind(\$parent)"><i class="fa fa-times-circle-o"></i></a>
 							<a class="btn btn-tiny btn-default btn-move" href="#" alt="Move"><i class="glyphicon glyphicon-move"></i></a>
 							<a class="btn btn-tiny btn-default" href="#" data-bind="click: toggleShowMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'fa fa-chevron-up' : 'fa fa-chevron-down' }"></i></a>
 						</div>
@@ -266,7 +266,7 @@
 		</div>
 		<div class="pagination pagination-sm" data-bind="visible: hasMultiplePages">
 			<ul data-bind="foreach: pages">
-				<li data-bind="attr: { 'class': state }"><a href="#" data-bind="click: \$parent.selectPage, text: title"></a></li>
+				<li data-bind="attr: { 'class': state }"><a href="#" data-bind="click: \$parent.selectPage.bind(\$parent), text: title"></a></li>
 			</ul>
 		</div>
 	</div>
@@ -295,8 +295,8 @@
 							</h3>
 						</div>
 						<div class="col-md-2 tools pull-right text-right">
-							<a class="btn btn-xs btn-default" href="#" alt="Retry" data-bind="click: \$parent.retryItem, visible: state('failed')"><i class="fa fa-retweet"></i></a>
-							<a class="btn btn-xs btn-default" href="#" alt="Remove" data-bind="click: \$parent.removeItem"><i class="fa fa-trash-o"></i></a>
+							<a class="btn btn-xs btn-default" href="#" alt="Retry" data-bind="click: \$parent.retryItem.bind(\$parent), visible: state('failed')"><i class="fa fa-retweet"></i></a>
+							<a class="btn btn-xs btn-default" href="#" alt="Remove" data-bind="click: \$parent.removeItem.bind(\$parent)"><i class="fa fa-trash-o"></i></a>
 							<a class="btn btn-xs btn-default" href="#" data-bind="click: toggleMore, attr: { 'alt': showMore() ? 'Show Less' : 'Show More' }"><i data-bind="attr: { 'class': showMore() ? 'fa fa-chevron-up' : 'fa fa-chevron-down' }"></i></a>
 						</div>
 					</div>
@@ -329,7 +329,7 @@
 		</div>
 		<div data-bind="visible: hasMultiplePages">
 			<ul data-bind="foreach: pages" class="pagination pagination-small">
-				<li data-bind="attr: { 'class': state }"><a href="#" data-bind="click: \$parent.selectPage, text: title"></a></li>
+				<li data-bind="attr: { 'class': state }"><a href="#" data-bind="click: \$parent.selectPage.bind(\$parent), text: title"></a></li>
 			</ul>
 		</div>
 	</div>

@@ -1,11 +1,12 @@
 var apiKey;
 
 if (!window.console)
-	window.console = { error: function(){}, log: function(){}, warn: function(){} };
+	window.console = { error: function () {}, log: function () {}, warn: function () {} };
 
-String.prototype.formatWith = function() {
-  for(var t = this, n = arguments.length; n--;)
-    t = t.replace(new RegExp("\\{" + n + "\\}","gm"), arguments[n]);
+String.prototype.formatWith = function () {
+  for (var t = this, n = arguments.length; n--;)
+    t = t.replace(new RegExp('\\{' + n + '\\}', 'gm'), arguments[n]);
+  
   return t;
 }
 
@@ -37,27 +38,31 @@ ko.bindingHandlers.toggle = {
 	}
 };
 
-var isMobileDevice = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-ko.bindingHandlers.idevicify = {
-	init: function(e, v) {
-		v = v();
+ko.bindingHandlers.idevicify = (function () {
+  var isMobileDevice = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  
+  return {  
+    init: function (e, v) {
+      v = v();
 
-		if (!isMobileDevice || typeof v !== "object")
-			return;
+      if (!isMobileDevice || typeof v !== "object")
+        return;
 
-		for (var key in v)
-			e.setAttribute(key, v[key]);
-	}
-};
+      for (var key in v)
+        e.setAttribute(key, v[key]);
+    }
+  };
+})();
 
-var StatusModel = function(data) {
+
+var StatusModel = function (data) {
   this.__initialize(data);
 };
 
 StatusModel.prototype = {
   constructor: StatusModel,
   
-  __initialize: function(data) {
+  __initialize: function (data) {
     this.type = data.type;
     this.date = data.date;
     this.text = data.text;
@@ -66,18 +71,18 @@ StatusModel.prototype = {
 };
 
 
-var StatusListModel = function() {
+var StatusListModel = function () {
   this.__initialize();
 };
 
 StatusListModel.prototype = {
   constructor: StatusListModel,
   
-  __getIsEmpty: function() {
+  __getIsEmpty: function () {
 		return this.items().length === 0;
   },
   
-	clear: function() {
+	clear: function () {
 		if (!confirm("Are you sure you want to clear all status messages?"))
 			return;
 			
@@ -89,15 +94,15 @@ StatusListModel.prototype = {
 			cache: false,
 			data: { session: apiKey }
 		}))
-		.then(function(r) {
+		.then(function (r) {
 			self.items.removeAll();
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error clearing warnings", e);
 		});
 	},
 	
-	refresh: function() {
+	refresh: function () {
 	  var self = this;
 	  
 		$.when($.ajax({
@@ -110,15 +115,15 @@ StatusListModel.prototype = {
 				apikey: apiKey
 			}
 		}))
-		.then(function(r){
+		.then(function (r){
 			if (!r)
 				return;
 
-			$.each(r.warnings, function() {
+			$.each(r.warnings, function () {
 				var splits = this.toString().split(/\n/);
 				var data = { type: splits[1], date: splits[0], text: splits[2] };
 
-				var existingItem = ko.utils.arrayFirst(self.items(), function(i) { return i.date == data.date; });
+				var existingItem = ko.utils.arrayFirst(self.items(), function (i) { return i.date == data.date; });
 
 				if (!existingItem) {
 					self.items.splice(0, 0, new StatusModel(data));
@@ -129,22 +134,22 @@ StatusListModel.prototype = {
 			if (self.isFirstLoad())
 				self.isFirstLoad(false);
 		})
-		.fail(function(e){
+		.fail(function (e){
 			console.error("Error loading warnings", e);
 		});
 	},
 
-  showItem: function(e) { 
+  showItem: function (e) { 
     if (e.nodeType === 1) 
       $(e).hide().fadeIn(); 
   },
   
-  hideItem: function(e) { 
+  hideItem: function (e) { 
     if (e.nodeType === 1) 
-      $(e).fadeOut(function() { $(e).remove(); }); 
+      $(e).fadeOut(function () { $(e).remove(); }); 
   },
   
-  __initialize: function() {
+  __initialize: function () {
     this.items = ko.observableArray();
     this.isFirstLoad = ko.observable(true);
     
@@ -161,8 +166,8 @@ QueueModel.prototype = {
   constructor: QueueModel,
   
   // computed property getters/setters
-  __getCategory: function() { return this.__category(); },
-  __setCategory: function(v) { 
+  __getCategory: function () { return this.__category(); },
+  __setCategory: function (v) { 
     if (!v) v = "Default"; 
     if (v != this.__category()) { 
       this.changeCategory(v); 
@@ -170,8 +175,8 @@ QueueModel.prototype = {
     }
   },
   
-  __getScript: function() { return this.__script(); },
-  __setScript: function(v) { 
+  __getScript: function () { return this.__script(); },
+  __setScript: function (v) { 
     if (!v) v = "Default"; 
     
     if (v != this.__script()) { 
@@ -180,8 +185,8 @@ QueueModel.prototype = {
     }
   },
   
-  __getOption: function() { return this.__option(); },
-  __setOption: function(v) { 
+  __getOption: function () { return this.__option(); },
+  __setOption: function (v) { 
     if (!v) v = 0; 
     if (v != this.__option()) { 
       this.changeOption(v); 
@@ -189,8 +194,8 @@ QueueModel.prototype = {
     }
   },
   
-  __getPriority: function() { return this.__priority(); },
-  __setPriority: function(v) { 
+  __getPriority: function () { return this.__priority(); },
+  __setPriority: function (v) { 
     if (!v) v = 0; 
     if (v != this.__priority()) { 
       this.changePriority(v); 
@@ -198,46 +203,46 @@ QueueModel.prototype = {
     }
   },
   
-  __getDownloadedMB: function() {
+  __getDownloadedMB: function () {
 		return (this.totalMB() - this.remainingMB()).toFixed(2);
 	},
 
-	__getPercentage: function() {
+	__getPercentage: function () {
 		return ((this.downloadedMB() / this.totalMB()) * 100).toFixed(2);
 	},
 
-	__getPercentageRounded: function() {
+	__getPercentageRounded: function () {
 		return Math.floor(this.percentage() || 0);
 	},
 	
-	__getIsPaused: function() {
+	__getIsPaused: function () {
 	  return this.status() === 'Paused';
 	},
 	
-	__getIsDownloading: function() {
+	__getIsDownloading: function () {
 		return this.status() === 'Downloading';
 	},
 	
-	__getHasData: function() {
+	__getHasData: function () {
 		return this.downloadedMB() > 0;
 	},
 
-	__getShowProgressBar: function() {
+	__getShowProgressBar: function () {
 		return this.isDownloading() || this.hasData();
 	},
 	
-	__onEditedNameSet: function(v) { 
+	__onEditedNameSet: function (v) { 
 	  if (v !== this.name()) 
 	    this.changeName(v); 
 	},
 	
 	
 	// functions
-	toggleShowMore: function() {
+	toggleShowMore: function () {
 		this.showMore(!this.showMore());
 	},
 
-	editName: function() {
+	editName: function () {
 	  var currentState = this.editingName();
 
 	  if (currentState) {
@@ -251,90 +256,90 @@ QueueModel.prototype = {
 	  this.editingName(!currentState);
 	},
 	
-	changeName: function(value) {
+	changeName: function (value) {
 	  console.log("Changing queue name", this, value);
 	  var previousName = this.name();
 	  this.name(value);
 
     $.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "queue", name: "rename", value: this.id, value2: value, output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (!r.status)
 				this.name(previousName);
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error changing queue category", e);
 			this.name(previousName);
 		});
 	},
 	
-	changeCategory: function(value) {
+	changeCategory: function (value) {
 	  var self = this;
 		console.log("Changing queue category", this, value);
 
     $.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "change_cat", value: this.id, value2: value, output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (r.status === true)
 				self.__category(value);
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error changing queue category", e);
 		});
 	},
 	
-	changeOption: function(value) {
+	changeOption: function (value) {
 	  var self = this;
 		console.log("Changing queue option", this, value);
 
     $.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "change_opts", value: this.id, value2: value, output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (r.status === true)
 				self.__option(value);
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error changing queue option", this, e);
 		});
 	},
 
-	changePriority: function(value) {
+	changePriority: function (value) {
 	  var self = this;
 		console.log("Changing queue priority", this, value);
 
     $.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "queue", name: "priority", value: this.id, value2: value, output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (r.status === true)
 				self.__priority(value);
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error changing queue priority", this, e);
 		});
 	},
 
-	changeScript: function(value) {
+	changeScript: function (value) {
 	  var self = this;
 		console.log("Changing queue script", this, value);
 
     $.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "change_script", value: this.id, value2: value, output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (r.status === true)
 				self.__script(value);
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error changing queue script", e);
 		});
 	},
 
-	toggleState: function() {
+	toggleState: function () {
 	  var self = this;
 		console.log("Changing queue state", this);
 
 		var actionType = this.isPaused() ? "resume" : "pause";
     
     $.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "queue", name: actionType, value: this.id, output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (r.status === true)
 				self.status(self.isPaused() ? "Downloading" : "Paused");
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error toggling queue state", this, e);
 		});
 	},
@@ -357,7 +362,7 @@ QueueModel.prototype = {
 		this.__option(parseInt(data.unpackopts));
   },
   
-  __initialize: function(data) {
+  __initialize: function (data) {
     // init observable properties 
     this.index = ko.observable();
     this.name = ko.observable();
@@ -421,27 +426,27 @@ QueueListModel.prototype = {
 		]
   },
   
-  __getItemsPerPage: function() {
+  __getItemsPerPage: function () {
     this.__itemsPerPage(parseInt(localStorage.queueItemsPerPage || this.defaults.itemsPerPage));
     return this.__itemsPerPage();
   },
   
-  __setItemsPerPage: function(v) {
+  __setItemsPerPage: function (v) {
     if (!v || isNaN(v) || parseInt(v) <= 0)
       v = this.defaults.itemsPerPage;
     localStorage.queueItemsPerPage = v;
     this.__itemsPerPage(v);
   },
   
-  __getHasSpeedLimit: function() {
+  __getHasSpeedLimit: function () {
 		return this.speedLimit() && !isNaN(this.speedLimit());
 	},
 	
-	__getIsTimerPaused: function() {
+	__getIsTimerPaused: function () {
 		return this.pausedUntil() && this.pausedUntil() > (new XDate());
 	},
 	
-	__getPauseTimerText: function() {
+	__getPauseTimerText: function () {
 	  if (!this.isTimerPaused())
 	    return '';
 	  
@@ -458,49 +463,49 @@ QueueListModel.prototype = {
 	    return '{0} minute{1} and {2} second{3}'.formatWith(diffMins, diffMins === 1 ? '' : 's', diffSecs, diffSecs === 1 ? '' : 's');
 	},
 	
-	__getHasScripts: function() {
+	__getHasScripts: function () {
 		return this.scripts().length > 0;
 	},
 	
-	__getIsEmpty: function() {
+	__getIsEmpty: function () {
 		return this.items().length <= 0;
 	},
 	
-	__getHasMultiplePages: function() {
+	__getHasMultiplePages: function () {
 		return this.itemsTotal() / this.itemsPerPage() > 1;
 	},
 	
-	__getShowDownloadSpeed: function() {
+	__getShowDownloadSpeed: function () {
 		return !this.isPaused() && !this.isEmpty() && this.speed() > 0;
 	},
 	
-	__getDownloadSpeed: function() {
+	__getDownloadSpeed: function () {
 		if (this.showDownloadSpeed())
 			return this.speed() + ' ' + this.speedMetric();
 	},
 	
-	__onSpeedLimitSet: function(v) {
+	__onSpeedLimitSet: function (v) {
 		if (!v || isNaN(v) || parseInt(v) < 0)
 			this.speedLimit('');
 			
 		this.setSpeedLimit(parseInt(v));
 	},
 
-	__onItemsTotalSet: function(v) {
+	__onItemsTotalSet: function (v) {
 		this.setPages();
 	},
 
-	__onCurrentPageSet: function(v) {
+	__onCurrentPageSet: function (v) {
 		this.setPages();
 	},
 	
-	__onItemsPerPageSet: function(v) {
+	__onItemsPerPageSet: function (v) {
     this.refresh({ force: true });
 	},
 	
-	moveItem: function(e) {
+	moveItem: function (e) {
 		var itemMoved = e.item;
-		var itemReplaced = ko.utils.arrayFirst(this.items(), function(i) { return i.index() == e.targetIndex; });
+		var itemReplaced = ko.utils.arrayFirst(this.items(), function (i) { return i.index() == e.targetIndex; });
 
 		itemMoved.index(e.targetIndex);
 		itemReplaced.index(e.sourceIndex);
@@ -508,20 +513,20 @@ QueueListModel.prototype = {
 		console.log("Moving queue", e, itemMoved);
 
 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "switch", value: itemMoved.id, value2: e.targetIndex, output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (r.position !== e.targetIndex) {
 				itemMoved.index(e.sourceIndex);
 				itemReplaced.index(e.targetIndex);
 			}
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error moving queue", itemMoved, e);
       itemMoved.index(e.sourceIndex);
       itemReplaced.index(e.targetIndex);
 		});
 	},
 
-	removeItem: function(itemToRemove) {
+	removeItem: function (itemToRemove) {
 		if (!confirm("Are you sure you want to delete this?"))
 			return;
 
@@ -530,18 +535,18 @@ QueueListModel.prototype = {
 		console.log("Removing queue item", itemToRemove);
 
 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "queue", name: "delete", value: itemToRemove.id, output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (r.status === true) {
 				self.items.remove(itemToRemove);
 				self.refresh({ force: true });
 			}
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error deleting queue item", itemToRemove, e);
 		});
 	},
 
-	toggleQueueState: function() {
+	toggleQueueState: function () {
 		console.log("Changing queue state");
 
 		var targetState = !this.isPaused(),
@@ -550,28 +555,28 @@ QueueListModel.prototype = {
 		this.isPaused(targetState);
 		
 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: !targetState ? "resume" : "pause", output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (!r.status)
 				self.isPaused(!targetState);
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			self.isPaused(!targetState);
 			console.error("Error changing queue state", this, e);
 		});
 	},
 	
-	setPauseMinutes: function(minutes) {
+	setPauseMinutes: function (minutes) {
 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "config", name: "set_pause", value: minutes, output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (r && r.status === true)
 				console.log("Paused for " + minutes + " minutes", r);
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error changing pause time", this, e);
 		});
 	},
 
-	refresh: function(options) {
+	refresh: function (options) {
 		var force = options && options.force === true || false;
 
 		if (!force && this.refreshXhr && this.refreshXhr.readyState !== 4)
@@ -596,11 +601,11 @@ QueueListModel.prototype = {
 		});
 
 		$.when(this.refreshXhr)
-		.then(function(r){
+		.then(function (r){
 			if (!r)
 				return;
 
-			var currentItemIds = $.map(self.items(), function(i) { return i.id; });
+			var currentItemIds = $.map(self.items(), function (i) { return i.id; });
 
 			if (r.queue.noofslots !== self.itemsTotal())
 				self.itemsTotal(r.queue.noofslots);
@@ -613,10 +618,10 @@ QueueListModel.prototype = {
 			self.timeRemaining(r.queue.timeleft);
 
 			if (r.queue.scripts.length !== self.scripts().length)
-				self.scripts($.map(r.queue.scripts, function(i) { return i == "*" ? "None" : i }));
+				self.scripts($.map(r.queue.scripts, function (i) { return i == "*" ? "None" : i }));
 
 			if (r.queue.categories.length !== self.categories().length)
-				self.categories($.map(r.queue.categories, function(i) { return i === "*" || i === "None" ? "Default" : i }));
+				self.categories($.map(r.queue.categories, function (i) { return i === "*" || i === "None" ? "Default" : i }));
 
 			self.isPaused(r.queue.paused);
 			self.sizeLeft(r.queue.sizeleft);
@@ -637,9 +642,9 @@ QueueListModel.prototype = {
 			  self.pausedUntil((new XDate()).addMinutes(parseInt(time[1])).addSeconds(parseInt(time[2])));
 			}
 
-			$.each(r.queue.slots, function() {
+			$.each(r.queue.slots, function () {
 				var data = this;
-				var existingItem = ko.utils.arrayFirst(self.items(), function(i) { return i.id === data.nzo_id; });
+				var existingItem = ko.utils.arrayFirst(self.items(), function (i) { return i.id === data.nzo_id; });
 				data.priority = ko.utils.arrayFirst(self.defaults.priorities, function (i) { return i.name === data.priority; }).value;
 
 				if (existingItem) {
@@ -653,12 +658,12 @@ QueueListModel.prototype = {
 			});
 
 			// remove any items that weren't returned by updated data
-			$.each(currentItemIds, function() {
+			$.each(currentItemIds, function () {
 				var id = this.toString();
-				self.items.remove(ko.utils.arrayFirst(self.items(), function(i) { return i.id == id; }));
+				self.items.remove(ko.utils.arrayFirst(self.items(), function (i) { return i.id == id; }));
 			});
 
-			self.items.sort(function(a, b) { return a.index() < b.index() ? -1 : 1; });
+			self.items.sort(function (a, b) { return a.index() < b.index() ? -1 : 1; });
 
 			self.updater.updateData({ downloadUrl: r.queue.new_rel_url, latestVersion: r.queue.new_release });
 
@@ -668,7 +673,7 @@ QueueListModel.prototype = {
 			if (self.isFirstLoad())
 				self.isFirstLoad(false);
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			if (e.statusText === "abort")
 				return;
 
@@ -676,27 +681,27 @@ QueueListModel.prototype = {
 		});
 	},
 	
-	setSpeedLimit: function(speedLimit) {
+	setSpeedLimit: function (speedLimit) {
 		if (this.__disableSpeedLimitUpdate)
 			return;
 
 		console.log("Changing speed limit");
 
 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "config", name: "speedlimit", value: speedLimit, output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (r && r.status === true)
 				console.log("Changed speed", r);
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error changing speed limit", this, e);
 		});
 	},
 
-	clearSpeedLimit: function() {
+	clearSpeedLimit: function () {
 		this.speedLimit(0);
 	},
 
-	setPages: function() {
+	setPages: function () {
     // reset paging
     var pagesToAdd = [];
     var page = this.currentPage();
@@ -716,7 +721,7 @@ QueueListModel.prototype = {
     this.pages(pagesToAdd);
 	},
 	
-	selectPage: function(page) {
+	selectPage: function (page) {
 		if (page.state != "")
 			return;
 
@@ -724,14 +729,14 @@ QueueListModel.prototype = {
 		this.refresh({ force: true });
 	},
 	
-	showItem: function(e) { 
+	showItem: function (e) { 
 	  if (e.nodeType === 1) 
 	    $(e).hide().fadeIn();
 	},
 	
-	hideItem: function(e) { 
+	hideItem: function (e) { 
 	  if (e.nodeType === 1) 
-	    $(e).fadeOut(function() { $(e).remove(); });
+	    $(e).fadeOut(function () { $(e).remove(); });
 	},
 	
   __initialize: function () {
@@ -774,430 +779,31 @@ QueueListModel.prototype = {
   }
 };
 
-// var QueueListModel = function() {
-// 	var self = this;
-// 
-// 	// constants
-// 	var refreshXhr;
-// 	var defaultItemsPerPage = 20;
-// 	var pausedUntil = ko.observable();
-// 	var speed = ko.observable(0);
-// 	var speedMetric = ko.observable();
-// 	var updater = new SABUpdaterModel();
-// 
-// // 	var priorities = [];
-// // 		priorities["Force"] = 2;
-// // 		priorities["High"] = 1;
-// // 		priorities["Normal"] = 0;
-// // 		priorities["Low"] = -1;
-// // 		priorities["Stop"] = -4;
-// // 
-// // 	var speedMetrics = []
-// // 		speedMetrics["K"] = "KB/s";
-// // 		speedMetrics["M"] = "MB/s";
-// // 		speedMetrics["G"] = "GB/s"; // hope to see this one day...
-// 
-// 	var scripts = ko.observableArray([]);
-// 	var categories = ko.observableArray([]);
-// // 	var priorities = ko.observableArray([
-// // 		{ value: 2, name: "Force" },
-// // 		{ value: 1, name: "High" },
-// // 		{ value: 0, name: "Normal" },
-// // 		{ value: -1, name: "Low" },
-// // 		{ value: -4, name: "Stop" }
-// // 	]);
-// // 	var options = ko.observableArray([
-// // 		{ value: 0, name: "Download" },
-// // 		{ value: 1, name: "+Repair" },
-// // 		{ value: 2, name: "+Unpack" },
-// // 		{ value: 3, name: "+Delete" }
-// // 	]);
-// 
-// 	//observables
-// 	var itemsTotal = ko.observable(0);
-// 	var items = ko.observableArray();
-// 	var currentPage = ko.observable(0);
-// 	var pages = ko.observableArray([]);
-// 	var isPaused = ko.observable(false);
-// 	var timeRemaining = ko.observable();
-// 	var speedLimit = ko.observable("");
-// 	var isFirstLoad = ko.observable(true);
-// 	var itemsPerPageInt = ko.observable();
-// 	var sizeLeft = ko.observable("");
-// 	var size = ko.observable("");
-// 	var cacheSize = ko.observable("");
-// 	var cacheArt = ko.observable("");
-// 
-// 	// computables
-// 	var itemsPerPage = ko.computed({
-// 		read: function() {
-// 			itemsPerPageInt(parseInt(localStorage.queueItemsPerPage || defaultItemsPerPage));
-// 			return itemsPerPageInt();
-// 		},
-// 		write: function(v) {
-// 			if (!v || isNaN(v) || parseInt(v) <= 0)
-// 				v = defaultItemsPerPage;
-// 			localStorage.queueItemsPerPage = v;
-// 			itemsPerPageInt(v);
-// 		}
-// 	}, self);
-// 	itemsPerPage.subscribe(function(v) {
-// 		refresh({ force: true });
-// 	});
-// 
-// 	var hasSpeedLimit = ko.computed(function() {
-// 		return speedLimit() && !isNaN(speedLimit());
-// 	}, self);
-// 
-// 	var isTimerPaused = ko.computed(function() {
-// 		return pausedUntil() && pausedUntil() > (new XDate());
-// 	}, self);
-// 	
-// 	var pauseTimerText = ko.computed(function() {
-// 	  if (!isTimerPaused())
-// 	    return '';
-// 	  
-// 	  var diff = (pausedUntil() - (new XDate())) / 1000,
-// 	    diffHours = Math.floor(diff / 3600) % 24,
-//       diffMins = Math.floor(diff / 60) % 60,
-//       diffSecs = Math.floor(diff % 60);
-//     
-// 	  if (diffHours > 0)
-// 	    return '{0} hour{1} and {2} minute{3}'.formatWith(diffHours, diffHours === 1 ? '' : 's', diffMins, diffMins === 1 ? '' : 's');
-// 	  else if (diffMins > 10)
-// 	    return '{0} minute{1}'.formatWith(diffMins, diffMins === 1 ? '' : 's');
-// 	  else
-// 	    return '{0} minute{1} and {2} second{3}'.formatWith(diffMins, diffMins === 1 ? '' : 's', diffSecs, diffSecs === 1 ? '' : 's');
-// 	}, self);
-// 
-// 	var hasScripts = ko.computed(function() {
-// 		return scripts().length > 0;
-// 	}, self);
-// 
-// 	var isEmpty = ko.computed(function() {
-// 		return items().length <= 0;
-// 	}, self);
-// 
-// 	var hasMultiplePages = ko.computed(function() {
-// 		return itemsTotal() / itemsPerPage() > 1;
-// 	}, self);
-// 
-// 	var showDownloadSpeed = ko.computed(function() {
-// 		return !isPaused() && !isEmpty() && speed() > 0;
-// 	}, self);
-// 
-// 	var downloadSpeed = ko.computed(function() {
-// 		if (showDownloadSpeed())
-// 			return speed() + ' ' + speedMetrics[speedMetric()];
-// 	}, self);
-// 
-// 	// subscriptions
-// 	speedLimit.subscribe(function(v) {
-// 		if (!v || isNaN(v) || parseInt(v) < 0)
-// 			speedLimit("");
-// 		setSpeedLimit(parseInt(v));
-// 	});
-// 
-// 	itemsTotal.subscribe(function(v) {
-// 		SetPages();
-// 	}, self);
-// 
-// 	currentPage.subscribe(function(v) {
-// 		SetPages();
-// 	}, self);
-// 
-// 	var moveItem = function(e) {
-// 		var itemMoved = e.item;
-// 		var itemReplaced = ko.utils.arrayFirst(items(), function(i) { return i.index() == e.targetIndex; });
-// 
-// 		itemMoved.index(e.targetIndex);
-// 		itemReplaced.index(e.sourceIndex);
-// 
-// 		console.log("Moving queue", e, itemMoved);
-// 
-// 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "switch", value: itemMoved.id, value2: e.targetIndex, output: "json", apikey: apiKey } }))
-// 		.then(function(r) {
-// 			if (r.position != e.targetIndex) {
-// 				itemMoved.index(e.sourceIndex);
-// 				itemReplaced.index(e.targetIndex);
-// 			}
-// 		})
-// 		.fail(function(e) {
-// 			console.error("Error moving queue", itemMoved, e);
-//       itemMoved.index(e.sourceIndex);
-//       itemReplaced.index(e.targetIndex);
-// 		});
-// 	};
-// 
-// 	var removeItem = function() {
-// 		if (!confirm("Are you sure you want to delete this?"))
-// 			return;
-// 
-// 		var itemToDelete = this;
-// 
-// 		console.log("Removing queue item", itemToDelete);
-// 
-// 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "queue", name: "delete", value: this.id, output: "json", apikey: apiKey } }))
-// 		.then(function(r) {
-// 			if (r.status == true) {
-// 				items.remove(itemToDelete);
-// 				refresh({ force: true });
-// 			}
-// 		})
-// 		.fail(function(e) {
-// 			console.error("Error deleting queue item", itemToDelete, e);
-// 		});
-// 	};
-// 
-// 	var toggleQueueState = function() {
-// 		console.log("Changing queue state");
-// 
-// 		var targetState = !isPaused();
-// 		isPaused(targetState);
-// 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: !targetState ? "resume" : "pause", output: "json", apikey: apiKey } }))
-// 		.then(function(r) {
-// 			if (!r.status) {
-// 				isPaused(!targetState);
-// 			  
-// 			  if (!targetState)
-// 			    pausedUntil(null); 
-// 			}
-// 		})
-// 		.fail(function(e) {
-// 			isPaused(!targetState);
-// 			console.error("Error changing queue state", this, e);
-// 		});
-// 	};
-// 	
-// 	var setPauseMinutes = function(minutes) {
-// 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "config", name: "set_pause", value: minutes, output: "json", apikey: apiKey } }))
-// 		.then(function(r) {
-// 			if (r && r.status == true)
-// 				console.log("Paused for " + minutes + " minutes", r);
-// 		})
-// 		.fail(function(e) {
-// 			console.error("Error changing pause time", this, e);
-// 		});
-// 	};
-// 
-// 	var refresh = function(opts) {
-// 		var force = opts && opts.force == true || false;
-// 
-// 		if (!force && refreshXhr && refreshXhr.readyState != 4)
-// 			return;
-// 
-// 		if (refreshXhr && refreshXhr.readyState != 4)
-// 			refreshXhr.abort();
-// 
-// 		refreshXhr = $.ajax({
-// 			url: "tapi",
-// 			type: "GET",
-// 			cache: false,
-// 			data: {
-// 				mode: "queue",
-// 				start: currentPage() * itemsPerPage(),
-// 				limit: itemsPerPage(),
-// 				output: "json",
-// 				apikey: apiKey
-// 			}
-// 		});
-// 
-// 		$.when(refreshXhr)
-// 		.then(function(r){
-// 			if (!r)
-// 				return;
-// 
-// 			var currentItemIds = $.map(items(), function(i) { return i.id; });
-// 
-// 			if (r.queue.noofslots != itemsTotal())
-// 				itemsTotal(r.queue.noofslots);
-// 
-// 			var queueSpeed = r.queue.speed.split(/\s/);
-// 			if (queueSpeed.length == 2) {
-// 				speed(parseFloat(queueSpeed[0]));
-// 				speedMetric(queueSpeed[1] === 'K' ? 'KB/s' : queueSpeed[1] === 'M' ? 'MB/s' : 'GB/s');
-// 			}
-// 			timeRemaining(r.queue.timeleft);
-// 
-// 			if (r.queue.scripts.length != scripts().length)
-// 				scripts($.map(r.queue.scripts, function(i) { return i == "*" ? "None" : i }));
-// 
-// 			if (r.queue.categories.length != categories().length)
-// 				categories($.map(r.queue.categories, function(i) { return i == "*" || i == "None" ? "Default" : i }));
-// 
-// 			isPaused(r.queue.paused);
-// 			sizeLeft(r.queue.sizeleft);
-// 			size(r.queue.size);
-// 			cacheSize(r.queue.cache_size);
-// 			cacheArt(r.queue.cache_art);
-// 
-// 			if (r.queue.speedlimit !== speedLimit()) {
-// 				disableSpeedLimitUpdate = true;
-// 				speedLimit(r.queue.speedlimit);
-// 				disableSpeedLimitUpdate = false;
-// 			}
-// 			
-// 			if (r.queue.pause_int === '0')
-// 			  pausedUntil(null);
-// 			else {
-// 			  var time = r.queue.pause_int.match(/(\d*):?(\d*)/)
-// 			  pausedUntil((new XDate()).addMinutes(parseInt(time[1])).addSeconds(parseInt(time[2])));
-// 			}
-// 
-// 			$.each(r.queue.slots, function() {
-// 				var data = this;
-// 				var existingItem = ko.utils.arrayFirst(items(), function(i) { return i.id == data.nzo_id; });
-// 				data.priority = priorities[data.priority];
-// 
-// 				if (existingItem) {
-// 					existingItem.updateData(data);
-// 					currentItemIds.splice(currentItemIds.indexOf(data.nzo_id), 1);
-// 				}
-// 				else {
-// 					items.push(new QueueModel(data));
-// 					console.log("Added new queue item", data);
-// 				}
-// 			});
-// 
-// 			// remove any items that weren't returned by updated data
-// 			$.each(currentItemIds, function() {
-// 				var id = this.toString();
-// 				items.remove(ko.utils.arrayFirst(items(), function(i) { return i.id == id; }));
-// 			});
-// 
-// 			items.sort(function(a, b) { return a.index() < b.index() ? -1 : 1; });
-// 
-// 			updater.updateData({ downloadUrl: r.queue.new_rel_url, latestVersion: r.queue.new_release });
-// 
-// 			if (force)
-// 				SetPages();
-// 
-// 			if (isFirstLoad())
-// 				isFirstLoad(false);
-// 		})
-// 		.fail(function(e) {
-// 			if (e.statusText === "abort")
-// 				return;
-// 
-// 			console.error("Error loading queue", e);
-// 		});
-// 	};
-// 
-// 	var disableSpeedLimitUpdate = false;
-// 
-// 	var setSpeedLimit = function(speedLimit) {
-// 		if (disableSpeedLimitUpdate)
-// 			return;
-// 
-// 		console.log("Changing speed limit");
-// 
-// 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "config", name: "speedlimit", value: speedLimit, output: "json", apikey: apiKey } }))
-// 		.then(function(r) {
-// 			if (r && r.status == true)
-// 				console.log("Changed speed", r);
-// 		})
-// 		.fail(function(e) {
-// 			console.error("Error changing speed limit", this, e);
-// 		});
-// 	};
-// 
-// 	var clearSpeedLimit = function() {
-// 		speedLimit(0);
-// 	};
-// 
-// 	var SetPages = function() {
-//     	// reset paging
-//     	var pagesToAdd = [];
-//     	var page = currentPage();
-//     	var totalPages = Math.ceil(itemsTotal() / itemsPerPage());
-//     	var start = page - 2 <= 0
-//     		? 0
-//     		: page + 2 > totalPages
-//     			? totalPages - 5
-//     			: page - 2;
-//     	var end = start + 5 > totalPages - 1 ? totalPages - 1 : start + 5;
-// 
-//     	pagesToAdd.push({ title: 'Prev', index: page-1, state: page == 0 ? "disabled" : "" });
-//     	for (var i = start; i <= end; i++)
-//     		pagesToAdd.push({ title: i + 1, index: i, state: page == i ? "active" : "" });
-//     	pagesToAdd.push({ title: 'Next', index: page + 1, state: page == totalPages - 1 ? "disabled" : "" });
-// 
-//     	pages(pagesToAdd);
-// 	};
-// 
-// 	var selectPage = function(page) {
-// 		if (page.state != "")
-// 			return;
-// 
-// 		currentPage(page.index);
-// 		refresh({ force: true });
-// 	}
-// 
-// 	var showItem = function(e) { if (e.nodeType === 1) $(e).hide().fadeIn() }
-// 	var hideItem = function(e) { if (e.nodeType === 1) $(e).fadeOut(function() { $(e).remove(); }) }
-// 
-// 	// public properties
-// 	itemsPerPage = itemsPerPage;
-// 	self.categories = categories;
-// 	self.options = options;
-// 	self.priorities = priorities;
-// 	self.scripts = scripts;
-// 	self.showDownloadSpeed = showDownloadSpeed;
-// 	self.isPaused = isPaused;
-// 	self.speedLimit = speedLimit;
-// 	self.hasSpeedLimit = hasSpeedLimit;
-// 	self.downloadSpeed = downloadSpeed;
-// 	self.timeRemaining = timeRemaining;
-// 	self.isEmpty = isEmpty;
-// 	self.items = items;
-// 	self.isFirstLoad = isFirstLoad;
-// 	self.hasMultiplePages = hasMultiplePages;
-// 	self.pages = pages;
-// 	self.updater = updater;
-// 	self.sizeLeft = sizeLeft;
-// 	self.size = size;
-// 	self.cacheSize = cacheSize;
-// 	self.cacheArt = cacheArt;
-// 	self.pausedUntil = pausedUntil;
-// 	self.pauseTimerText = pauseTimerText;
-// 	self.isTimerPaused = isTimerPaused;
-// 
-// 	// public methods
-// 	self.refresh = refresh;
-// 	self.selectPage = selectPage;
-// 	self.clearSpeedLimit = clearSpeedLimit;
-// 	self.setSpeedLimit = setSpeedLimit;
-// 	self.moveItem = moveItem;
-// 	self.removeItem = removeItem;
-// 	self.toggleQueueState = toggleQueueState;
-// 	self.setPauseMinutes = setPauseMinutes;
-// };
 
-
-var HistoryModel = function(data) {
+var HistoryModel = function (data) {
   this.__initialize(data);
 };
 
 HistoryModel.prototype = {
   constructor: HistoryModel,
   
-  __getCompletedOnDaysAgo: function() {
+  __getCompletedOnDaysAgo: function () {
     var date = this.completedDate();
     var dateNow = this.currentDate();
 
     return date ? date.diffDays(dateNow) : -1;
 	},
 	
-	__getCompletedOnDay: function() {
+	__getCompletedOnDay: function () {
 		var date = this.completedDate();
 		return date ? date.toString('dddd') : '';
 	},
 	
-	__getCompletedOnDate: function() {
+	__getCompletedOnDate: function () {
 		return this.completedDate() ? this.completedDate().toString('MM/dd/yy hh:mm TT') : '';
 	},
 	
-	__getCompletedOn: function() {
+	__getCompletedOn: function () {
 		var daysDiff = this.completedOnDaysAgo();
 		var dayString = this.completedOnDay();
 		var dateString = this.completedOnDate();
@@ -1218,11 +824,11 @@ HistoryModel.prototype = {
 		return ret ? '{0} ({1})'.formatWith(ret, dateString) : dateString;
 	},
 	
-	toggleMore: function() {
+	toggleMore: function () {
 		this.showMore(!this.showMore());
 	},
 
-	state: function(v) {
+	state: function (v) {
 		var currentStatus = this.status().toLowerCase();
 
 		if (currentStatus !== 'completed' && currentStatus !== 'failed' && currentStatus !== 'queued')
@@ -1231,7 +837,7 @@ HistoryModel.prototype = {
 		return v.toLowerCase() === currentStatus;
 	},
 
-	updateData: function(data) {
+	updateData: function (data) {
 		this.id = data.nzo_id;
 		this.index(data.index);
 		this.name($.trim(data.name));
@@ -1252,10 +858,10 @@ HistoryModel.prototype = {
 		this.completedDate(new XDate(date));
 		this.completed(date);
 
-		window.setInterval((function() { this.currentDate(new XDate()); }).bind(this), 3600000); // once per hour
+		window.setInterval((function () { this.currentDate(new XDate()); }).bind(this), 3600000); // once per hour
 	},
   
-  __initialize: function(data) {
+  __initialize: function (data) {
     // init observable properties
     this.index = ko.observable();
     this.name = ko.observable();
@@ -1287,7 +893,7 @@ HistoryModel.prototype = {
 };
 
 
-var HistoryListModel = function() {
+var HistoryListModel = function () {
   this.__initialize();
 }
 
@@ -1309,27 +915,27 @@ HistoryListModel.prototype = {
     this.__itemsPerPage(v);
   },
   
-  __getIsEmpty: function() {
+  __getIsEmpty: function () {
 		return this.items().length === 0;
 	},
 	
-	__getHasMultiplePages: function() {
+	__getHasMultiplePages: function () {
 		return this.itemsTotal() / this.itemsPerPage() > 1;
 	},
 	
-	__onItemsPerPageSet: function(v) {
+	__onItemsPerPageSet: function (v) {
 		this.refresh({ force: true });
 	},
 
-	__onItemsTotalSet: function(v) {
+	__onItemsTotalSet: function (v) {
 		this.setPages();
 	},
 
-	__onCurrentPageSet: function(v) {
+	__onCurrentPageSet: function (v) {
 		this.setPages();
 	},
 	
-	clear: function() {
+	clear: function () {
 		if (!confirm("Are you sure you want to clear all history?"))
 			return;
 
@@ -1337,50 +943,50 @@ HistoryListModel.prototype = {
 		console.log("Clearing all history");
 
     $.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "history", name: "delete", value: "all", output: "json", apikey: apiKey } }))
-    .then(function(r) {
+    .then(function (r) {
       if (r.status === true)
         self.items.removeAll();
     })
-    .fail(function(e) {
+    .fail(function (e) {
       console.error("Error clearing all history", e);
     });
   },
   
-  removeItem: function(itemToRemove) {
+  removeItem: function (itemToRemove) {
 		if (!confirm("Are you sure you want to delete this?"))
 			return;
     
     var self = this;
-		console.log("Removing history item", itemToDelete);
+		console.log("Removing history item", itemToRemove);
 
 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "history", name: "delete", value: itemToRemove.id, output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (r.status == true) {
 				self.items.remove(itemToRemove);
 				self.refresh({ force: true });
 			}
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error deleting history item", itemToRemove, e);
 		});
   },
   
-  retryItem: function(itemToRetry) {
+  retryItem: function (itemToRetry) {
     var self = this;
 		console.log("Retrying item", itemToRetry);
 
 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "retry", value: itemToRetry.id, output: "json", apikey: apiKey } }))
-		.then(function(r) {
+		.then(function (r) {
 			if (r.status === true) {
 				self.refresh({ force: true });
 			}
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error retrying item", itemToRetry, e);
 		});
   },
   
-  refresh: function(options) {
+  refresh: function (options) {
 		var force = options && options.force === true || false;
 
 		if (!force && this.refreshXhr && this.refreshXhr.readyState !== 4)
@@ -1404,19 +1010,19 @@ HistoryListModel.prototype = {
 		});
 
 		$.when(this.refreshXhr)
-		.then(function(r){
+		.then(function (r){
 			if (!r)
 				return;
 
-			var currentItemIds = $.map(self.items(), function(i) { return i.id; });
+			var currentItemIds = $.map(self.items(), function (i) { return i.id; });
 
 			if (r.history.noofslots != self.itemsTotal())
 				self.itemsTotal(r.history.noofslots);
 
-			$.each(r.history.slots, function(index) {
+			$.each(r.history.slots, function (index) {
 				var data = this;
 				data.index = index;
-				var existingItem = ko.utils.arrayFirst(self.items(), function(i) { return i.id == data.nzo_id; });
+				var existingItem = ko.utils.arrayFirst(self.items(), function (i) { return i.id == data.nzo_id; });
 
 				if (existingItem) {
 					existingItem.updateData(data);
@@ -1428,12 +1034,12 @@ HistoryListModel.prototype = {
 			});
 
 			// remove any items that weren't returned by updated data
-			$.each(currentItemIds, function() {
+			$.each(currentItemIds, function () {
 				var id = this.toString();
-				self.items.remove(ko.utils.arrayFirst(self.items(), function(i) { return i.id == id; }));
+				self.items.remove(ko.utils.arrayFirst(self.items(), function (i) { return i.id == id; }));
 			});
 
-			self.items.sort(function(a, b) { return a.index() < b.index() ? -1 : 1; });
+			self.items.sort(function (a, b) { return a.index() < b.index() ? -1 : 1; });
 
 			if (force)
 				self.setPages();
@@ -1441,7 +1047,7 @@ HistoryListModel.prototype = {
 			if (self.isFirstLoad())
 				self.isFirstLoad(false);
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			if (e.statusText === "abort")
 				return;
 
@@ -1449,17 +1055,17 @@ HistoryListModel.prototype = {
 		});
 	},
 	
-	showItem: function(e) { 
+	showItem: function (e) { 
 	  if (e.nodeType === 1) 
 	    $(e).hide().fadeIn(); 
 	},
 	
-	hideItem: function(e) { 
+	hideItem: function (e) { 
 	  if (e.nodeType === 1) 
-	    $(e).fadeOut(function() { $(e).remove(); }); 
+	    $(e).fadeOut(function () { $(e).remove(); }); 
 	},
 	
-	setPages: function() {
+	setPages: function () {
     // reset paging
     var pagesToAdd = [];
     var page = this.currentPage();
@@ -1479,7 +1085,7 @@ HistoryListModel.prototype = {
     this.pages(pagesToAdd);
 	},
 	
-	selectPage: function(page) {
+	selectPage: function (page) {
 		if (page.state != "")
 			return;
 
@@ -1487,7 +1093,7 @@ HistoryListModel.prototype = {
 		this.refresh({ force: true });
 	},
   
-  __initialize: function() {
+  __initialize: function () {
     this.itemsTotal = ko.observable(0);
 	  this.items = ko.observableArray();
 	  this.currentPage = ko.observable(0);
@@ -1537,16 +1143,16 @@ UpdaterModel.prototype = {
 	  return this.__latestVersion(); 
 	},
 	
-	__setLatestVersion: function () {
+	__setLatestVersion: function (v) {
 	  localStorage.latestVersion = v; 
 	  this.__latestVersion(v); 
 	},
 	
-	__getUpdateAvailable: function() {
+	__getUpdateAvailable: function () {
 		return this.latestVersion() > this.defaults.currentVersion;
 	},
 
-  __getVersionCheckDate: function() { 
+  __getVersionCheckDate: function () { 
     return new XDate(parseInt(localStorage.versionCheckDate || 0)); 
   },
   
@@ -1563,43 +1169,43 @@ UpdaterModel.prototype = {
     this.__versionHistory(v);
   },
   
-  __getVersionHistorySinceThis: function() {
-		return ko.utils.arrayFilter(this.versionHistory(), (function(i) {
+  __getVersionHistorySinceThis: function () {
+		return ko.utils.arrayFilter(this.versionHistory(), (function (i) {
 			return parseFloat(i.version) > this.defaults.currentVersion;
 		}).bind(this));
 	},
 	
-	__getShowUpdateBanner: function() {
+	__getShowUpdateBanner: function () {
 		return this.updateAvailable() && !this.updateHidden();
 	},
 	
-	checkForUpdates: function() {
+	checkForUpdates: function () {
 		if (this.updateAvailable() || (new XDate()).addMilliseconds(-1 * this.defaults.checkIntervalMilliseconds) < this.versionCheckDate())
 			return;
 
     var self = this;
 		console.log("Checking for new theme version");
 		
-		$.when($.ajax({ url: remoteRepository + "versions.json", type: "GET", dataType: "json", cache: false }))
-		.then(function(r) {
+		$.when($.ajax({ url: this.defaults.remoteRepository + "versions.json", type: "GET", dataType: "json", cache: false }))
+		.then(function (r) {
 			if (!r)
 				return;
 
 			if (r.latestFileName.match(/^https?:/g))
 			  self.downloadUrl(r.latestFileName);
 			else
-			  self.downloadUrl(remoteRepository + r.latestFileName);
+			  self.downloadUrl(self.defaults.remoteRepository + r.latestFileName);
 
 			self.latestVersion(r.latestVersion);
 			self.versionHistory(r.versions);
 			self.versionCheckDate(new XDate());
 		})
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error retrieving remote version manifest", e);
 		});
 	},
 	
-	remindMeLater: function() {
+	remindMeLater: function () {
 		this.updateHidden(true);
 	},
   
@@ -1619,7 +1225,7 @@ UpdaterModel.prototype = {
     this.showUpdateBanner = ko.computed(this.__getShowUpdateBanner.bind(this), this);
 	
     this.checkForUpdates();
-    window.setInterval((function() { this.checkForUpdates(); }).bind(this), this.defaults.checkIntervalMilliseconds);
+    window.setInterval((function () { this.checkForUpdates(); }).bind(this), this.defaults.checkIntervalMilliseconds);
   }
 };
 
@@ -1631,27 +1237,27 @@ var SABUpdaterModel = function () {
 SABUpdaterModel.prototype = {
   constructor: SABUpdaterModel,
   
-  __getUpdateHidden: function() { 
+  __getUpdateHidden: function () { 
     return sessionStorage.hideSABUpdate === '1'; 
   },
   
-  __setUpdateHidden: function(v) { 
+  __setUpdateHidden: function (v) { 
     sessionStorage.hideSABUpdate = v ? '1' : '0'; 
   },
   
-  __getUpdateAvailable: function() {
+  __getUpdateAvailable: function () {
 		return this.downloadUrl() !== '';
 	},
 
-	__getShowUpdateBanner: function() {
+	__getShowUpdateBanner: function () {
 		return this.updateAvailable() && !this.updateHidden();
 	},
 	
-	remindMeLater: function() {
+	remindMeLater: function () {
 		this.updateHidden(true);
 	},
 
-	updateData: function(data) {
+	updateData: function (data) {
 		this.downloadUrl(data.downloadUrl);
 		this.latestVersion(data.latestVersion);
 	},
@@ -1672,7 +1278,7 @@ MainModel.prototype = {
   
   defaults: { refreshInterval: 2000 },
   
-  __getRefreshInterval: function() { 
+  __getRefreshInterval: function () { 
     return this.__refreshInterval(); 
   },
   
@@ -1693,7 +1299,7 @@ MainModel.prototype = {
     return this.pauseTimer() && this.pauseTimer() !== '0';
   },
   
-  __onRefreshRateSet: function(v) {
+  __onRefreshRateSet: function (v) {
 		if (!v || isNaN(v) || parseInt(v) <= 0) {
 			this.refreshRate(this.refreshInterval() / 1000);
 			return;
@@ -1707,19 +1313,19 @@ MainModel.prototype = {
 	},
 	
 	
-	setRefresh: function(interval) {
+	setRefresh: function (interval) {
 		if (this.__refreshTimer)
 			this.clearRefresh();
 
-		this.__refreshTimer = window.setInterval((function() { this.refresh(); }).bind(this), interval);
+		this.__refreshTimer = window.setInterval((function () { this.refresh(); }).bind(this), interval);
 	},
 	
-	clearRefresh: function() {
+	clearRefresh: function () {
 		window.clearInterval(this.__refreshTimer);
 		this.__refreshTimer = null;
 	},
 	
-	refresh: function(options) {
+	refresh: function (options) {
     this.clearRefresh();
 
     this.queue.refresh(options);
@@ -1729,45 +1335,45 @@ MainModel.prototype = {
     this.setRefresh(this.refreshInterval());
 	},
 
-	restart: function() {
+	restart: function () {
 		if (!confirm("Are you sure you want to restart?"))
 			return;
 
     console.log("Restarting");
 
 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "restart", output: "json", apikey: apiKey } }))
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error restarting", this, e);
 		});
 	},
 	
-	shutdown: function() {
+	shutdown: function () {
 		if (!confirm("Are you sure you want to shutdown?"))
 			return;
 
 		console.log("Shutting down");
 
 		$.when($.ajax({ url: "tapi", type: "GET", cache: false, data: { mode: "shutdown", output: "json", apikey: apiKey } }))
-		.fail(function(e) {
+		.fail(function (e) {
 			console.error("Error shutting down", this, e);
 		});
 	},
 	
-	addUrl: function(form) {
+	addUrl: function (form) {
 		$.when($.ajax({ url: "tapi", type: "POST", cache: false, data: { mode: "addid", name: $(form.url).val(), cat: "Default", script: "Default", priority: -100, pp: -1, apikey: apiKey } }))
-		.then(function(r){
+		.then(function (r){
 			$("#addNZB").modal("hide");
 		})
-		.fail(function(e){
+		.fail(function (e){
 			console.error("Error adding NZB via URL", e);
 		});
 	},
 	
-	addFileFromForm: function(form) {
+	addFileFromForm: function (form) {
 		return addFile($(form.file)[0].files[0]);
 	},
 	
-	addFile: function(file) {
+	addFile: function (file) {
 		var data = new FormData();
 		data.append("name", file);
 		data.append("mode", "addfile");
@@ -1778,10 +1384,10 @@ MainModel.prototype = {
 		data.append("apikey", apiKey);
 
 		$.when($.ajax({ url: "tapi", type: "POST", cache: false, processData: false, contentType: false, data: data }))
-		.then(function(r){
+		.then(function (r){
 			$("#addNZB").modal("hide");
 		})
-		.fail(function(e){
+		.fail(function (e){
 			console.error("Error adding NZB via URL", e);
 		});
 	},

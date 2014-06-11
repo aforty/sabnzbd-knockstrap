@@ -320,7 +320,7 @@ var QueueModel = function(data) {
 		  name($.trim(data.filename));
 		status(data.status);
 		categoryInternal(/^\*|None$/.test(data.cat) ? "Default" : data.cat);
-		priorityInternal(data.priority || "2");
+		priorityInternal(data.priority || "0");
 		scriptInternal(data.script);
 		optionInternal(parseInt(data.unpackopts));
 		totalMB(parseFloat(data.mb));
